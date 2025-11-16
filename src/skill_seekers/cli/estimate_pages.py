@@ -15,7 +15,7 @@ import json
 # Add parent directory to path for imports when run as script
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from cli.constants import (
+from skill_seekers.cli.constants import (
     DEFAULT_RATE_LIMIT,
     DEFAULT_MAX_DISCOVERY,
     DISCOVERY_THRESHOLD
@@ -240,13 +240,13 @@ def main():
         epilog="""
 Examples:
   # Estimate pages for a config
-  python3 cli/estimate_pages.py configs/react.json
+  skill-seekers estimate configs/react.json
 
   # Estimate with higher discovery limit
-  python3 cli/estimate_pages.py configs/godot.json --max-discovery 2000
+  skill-seekers estimate configs/godot.json --max-discovery 2000
 
   # Quick estimate (stop at 100 pages)
-  python3 cli/estimate_pages.py configs/vue.json --max-discovery 100
+  skill-seekers estimate configs/vue.json --max-discovery 100
         """
     )
 

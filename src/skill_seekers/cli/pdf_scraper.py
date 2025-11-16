@@ -195,7 +195,7 @@ class PDFToSkillConverter:
         self._generate_skill_md(categorized)
 
         print(f"\n✅ Skill built successfully: {self.skill_dir}/")
-        print(f"\n📦 Next step: Package with: python3 cli/package_skill.py {self.skill_dir}/")
+        print(f"\n📦 Next step: Package with: skill-seekers package {self.skill_dir}/")
 
     def _generate_reference_file(self, cat_key, cat_data):
         """Generate a reference markdown file for a category"""
@@ -272,7 +272,19 @@ class PDFToSkillConverter:
         """Generate main SKILL.md file"""
         filename = f"{self.skill_dir}/SKILL.md"
 
+        # Generate skill name (lowercase, hyphens only, max 64 chars)
+        skill_name = self.name.lower().replace('_', '-').replace(' ', '-')[:64]
+
+        # Truncate description to 1024 chars if needed
+        desc = self.description[:1024] if len(self.description) > 1024 else self.description
+
         with open(filename, 'w', encoding='utf-8') as f:
+            # Write YAML frontmatter
+            f.write(f"---\n")
+            f.write(f"name: {skill_name}\n")
+            f.write(f"description: {desc}\n")
+            f.write(f"---\n\n")
+
             f.write(f"# {self.name.title()} Documentation Skill\n\n")
             f.write(f"{self.description}\n\n")
 

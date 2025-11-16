@@ -4,9 +4,9 @@ Documentation to Claude Skill Converter
 Single tool to scrape any documentation and create high-quality Claude skills.
 
 Usage:
-    python3 cli/doc_scraper.py --interactive
-    python3 cli/doc_scraper.py --config configs/godot.json
-    python3 cli/doc_scraper.py --url https://react.dev/ --name react
+    skill-seekers scrape --interactive
+    skill-seekers scrape --config configs/godot.json
+    skill-seekers scrape --url https://react.dev/ --name react
 """
 
 import os
@@ -29,10 +29,10 @@ from typing import Optional, Dict, List, Tuple, Set, Deque, Any
 # Add parent directory to path for imports when run as script
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from cli.llms_txt_detector import LlmsTxtDetector
-from cli.llms_txt_parser import LlmsTxtParser
-from cli.llms_txt_downloader import LlmsTxtDownloader
-from cli.constants import (
+from skill_seekers.cli.llms_txt_detector import LlmsTxtDetector
+from skill_seekers.cli.llms_txt_parser import LlmsTxtParser
+from skill_seekers.cli.llms_txt_downloader import LlmsTxtDownloader
+from skill_seekers.cli.constants import (
     DEFAULT_RATE_LIMIT,
     DEFAULT_MAX_PAGES,
     DEFAULT_CHECKPOINT_INTERVAL,
@@ -257,35 +257,73 @@ class DocToSkillConverter:
                 paragraphs.append(text)
         
         page['content'] = '\n\n'.join(paragraphs)
-        
-        # Extract links
-        for link in main.find_all('a', href=True):
+
+        # Extract links from entire page (not just main content)
+        # This allows discovery of navigation links outside the main content area
+        for link in soup.find_all('a', href=True):
             href = urljoin(url, link['href'])
             # Strip anchor fragments to avoid treating #anchors as separate pages
             href = href.split('#')[0]
             if self.is_valid_url(href) and href not in page['links']:
                 page['links'].append(href)
-        
+
         return page
-    
-    def detect_language(self, elem: Any, code: str) -> str:
-        """Detect programming language from code block"""
-        # Check class attribute
-        classes = elem.get('class', [])
+
+    def _extract_language_from_classes(self, classes):
+        """Extract language from class list
+
+        Supports multiple patterns:
+        - language-{lang} (e.g., "language-python")
+        - lang-{lang} (e.g., "lang-javascript")
+        - brush: {lang} (e.g., "brush: java")
+        - bare language name (e.g., "python", "java")
+
+        """
+        # Define common programming languages
+        known_languages = [
+            "javascript", "java", "xml", "html", "python", "bash", "cpp", "typescript",
+            "go", "rust", "php", "ruby", "swift", "kotlin", "csharp", "c", "sql",
+            "yaml", "json", "markdown", "css", "scss", "sass", "jsx", "tsx", "vue",
+            "shell", "powershell", "r", "scala", "dart", "perl", "lua", "elixir"
+        ]
+
         for cls in classes:
+            # Clean special characters (except word chars and hyphens)
+            cls = re.sub(r'[^\w-]', '', cls)
+
             if 'language-' in cls:
                 return cls.replace('language-', '')
+
             if 'lang-' in cls:
                 return cls.replace('lang-', '')
-        
+
+            # Check for brush: pattern (e.g., "brush: java")
+            if 'brush' in cls.lower():
+                lang = cls.lower().replace('brush', '').strip()
+                if lang in known_languages:
+                    return lang
+
+            # Check for bare language name
+            if cls in known_languages:
+                return cls
+
+        return None
+
+    def detect_language(self, elem, code):
+        """Detect programming language from code block"""
+
+        # Check element classes
+        lang = self._extract_language_from_classes(elem.get('class', []))
+        if lang:
+            return lang
+
         # Check parent pre element
         parent = elem.parent
         if parent and parent.name == 'pre':
-            classes = parent.get('class', [])
-            for cls in classes:
-                if 'language-' in cls:
-                    return cls.replace('language-', '')
-        
+            lang = self._extract_language_from_classes(parent.get('class', []))
+            if lang:
+                return lang
+
         # Heuristic detection
         if 'import ' in code and 'from ' in code:
             return 'python'
@@ -297,7 +335,14 @@ class DocToSkillConverter:
             return 'python'
         if '#include' in code or 'int main' in code:
             return 'cpp'
-        
+        # C# detection
+        if 'using System' in code or 'namespace ' in code:
+            return 'csharp'
+        if '{ get; set; }' in code:
+            return 'csharp'
+        if any(keyword in code for keyword in ['public class ', 'private class ', 'internal class ', 'public static void ']):
+            return 'csharp'
+
         return 'unknown'
     
     def extract_patterns(self, main: Any, code_samples: List[Dict[str, Any]]) -> List[Dict[str, str]]:
@@ -1604,11 +1649,14 @@ def execute_scraping_and_building(config: Dict[str, Any], args: argparse.Namespa
     # Check for existing data
     exists, page_count = check_existing_data(config['name'])
 
-    if exists and not args.skip_scrape:
+    if exists and not args.skip_scrape and not args.fresh:
         logger.info("\n✓ Found existing data: %d pages", page_count)
         response = input("Use existing data? (y/n): ").strip().lower()
         if response == 'y':
             args.skip_scrape = True
+    elif exists and args.fresh:
+        logger.info("\n✓ Found existing data: %d pages", page_count)
+        logger.info("  --fresh flag set, will re-scrape from scratch")
 
     # Create converter
     converter = DocToSkillConverter(config, resume=args.resume)
@@ -1687,7 +1735,7 @@ def execute_enhancement(config: Dict[str, Any], args: argparse.Namespace) -> Non
             logger.warning("\n⚠ Enhancement failed, but skill was still built")
         except FileNotFoundError:
             logger.warning("\n⚠ enhance_skill.py not found. Run manually:")
-            logger.info("  python3 cli/enhance_skill.py output/%s/", config['name'])
+            logger.info("  skill-seekers-enhance output/%s/", config['name'])
 
     # Optional enhancement with Claude Code (local, no API key)
     if args.enhance_local:
@@ -1702,18 +1750,18 @@ def execute_enhancement(config: Dict[str, Any], args: argparse.Namespace) -> Non
             logger.warning("\n⚠ Enhancement failed, but skill was still built")
         except FileNotFoundError:
             logger.warning("\n⚠ enhance_skill_local.py not found. Run manually:")
-            logger.info("  python3 cli/enhance_skill_local.py output/%s/", config['name'])
+            logger.info("  skill-seekers-enhance output/%s/", config['name'])
 
     # Print packaging instructions
     logger.info("\n📦 Package your skill:")
-    logger.info("  python3 cli/package_skill.py output/%s/", config['name'])
+    logger.info("  skill-seekers-package output/%s/", config['name'])
 
     # Suggest enhancement if not done
     if not args.enhance and not args.enhance_local:
         logger.info("\n💡 Optional: Enhance SKILL.md with Claude:")
-        logger.info("  API-based:  python3 cli/enhance_skill.py output/%s/", config['name'])
+        logger.info("  API-based:  skill-seekers-enhance output/%s/", config['name'])
         logger.info("              or re-run with: --enhance")
-        logger.info("  Local (no API key): python3 cli/enhance_skill_local.py output/%s/", config['name'])
+        logger.info("  Local (no API key): skill-seekers-enhance output/%s/", config['name'])
         logger.info("                      or re-run with: --enhance-local")
 
 

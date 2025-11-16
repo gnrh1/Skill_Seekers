@@ -6,8 +6,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![MCP Integration](https://img.shields.io/badge/MCP-Integrated-blue.svg)](https://modelcontextprotocol.io)
-[![Tested](https://img.shields.io/badge/Tests-299%20Passing-brightgreen.svg)](tests/)
+[![Tested](https://img.shields.io/badge/Tests-379%20Passing-brightgreen.svg)](tests/)
 [![Project Board](https://img.shields.io/badge/Project-Board-purple.svg)](https://github.com/users/yusufkaraaslan/projects/2)
+[![PyPI version](https://badge.fury.io/py/skill-seekers.svg)](https://pypi.org/project/skill-seekers/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/skill-seekers.svg)](https://pypi.org/project/skill-seekers/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/skill-seekers.svg)](https://pypi.org/project/skill-seekers/)
 
 **Automatically convert documentation websites, GitHub repositories, and PDFs into Claude AI skills in minutes.**
 
@@ -15,7 +18,7 @@
 
 ## What is Skill Seeker?
 
-Skill Seeker is an automated tool that transforms documentation websites, GitHub repositories, and PDF files into production-ready [Claude AI skills](https://claude.ai). Instead of manually reading and summarizing documentation, Skill Seeker:
+Skill Seeker is an automated tool that transforms documentation websites, GitHub repositories, and PDF files into production-ready [Claude AI skills](https://www.anthropic.com/news/skills). Instead of manually reading and summarizing documentation, Skill Seeker:
 
 1. **Scrapes** multiple sources (docs, GitHub repos, PDFs) automatically
 2. **Analyzes** code repositories with deep AST parsing
@@ -83,11 +86,71 @@ Skill Seeker is an automated tool that transforms documentation websites, GitHub
 - ✅ **Caching System** - Scrape once, rebuild instantly
 
 ### ✅ Quality Assurance
-- ✅ **Fully Tested** - 299 tests with 100% pass rate
+- ✅ **Fully Tested** - 379 tests with comprehensive coverage
 
-## Quick Example
+---
 
-### Option 1: Use from Claude Code (Recommended)
+## 📦 Now Available on PyPI!
+
+**Skill Seekers is now published on the Python Package Index!** Install with a single command:
+
+```bash
+pip install skill-seekers
+```
+
+Get started in seconds. No cloning, no setup - just install and run. See installation options below.
+
+---
+
+## Quick Start
+
+### Option 1: Install from PyPI (Recommended)
+
+```bash
+# Install from PyPI (easiest method!)
+pip install skill-seekers
+
+# Use the unified CLI
+skill-seekers scrape --config configs/react.json
+skill-seekers github --repo facebook/react
+skill-seekers enhance output/react/
+skill-seekers package output/react/
+```
+
+**Time:** ~25 minutes | **Quality:** Production-ready | **Cost:** Free
+
+📖 **New to Skill Seekers?** Check out our [Quick Start Guide](QUICKSTART.md) or [Bulletproof Guide](BULLETPROOF_QUICKSTART.md)
+
+### Option 2: Install via uv (Modern Python Tool)
+
+```bash
+# Install with uv (fast, modern alternative)
+uv tool install skill-seekers
+
+# Or run directly without installing
+uv tool run --from skill-seekers skill-seekers scrape --config https://raw.githubusercontent.com/yusufkaraaslan/Skill_Seekers/main/configs/react.json
+
+# Unified CLI - simple commands
+skill-seekers scrape --config configs/react.json
+skill-seekers github --repo facebook/react
+skill-seekers package output/react/
+```
+
+**Time:** ~25 minutes | **Quality:** Production-ready | **Cost:** Free
+
+### Option 3: Development Install (From Source)
+
+```bash
+# Clone and install in editable mode
+git clone https://github.com/yusufkaraaslan/Skill_Seekers.git
+cd Skill_Seekers
+pip install -e .
+
+# Use the unified CLI
+skill-seekers scrape --config configs/react.json
+```
+
+### Option 4: Use from Claude Code (MCP Integration)
 
 ```bash
 # One-time setup (5 minutes)
@@ -100,100 +163,91 @@ Skill Seeker is an automated tool that transforms documentation websites, GitHub
 
 **Time:** Automated | **Quality:** Production-ready | **Cost:** Free
 
-### Option 2: Use CLI Directly (HTML Docs)
+### Option 5: Legacy CLI (Backwards Compatible)
 
 ```bash
-# Install dependencies (2 pip packages)
+# Install dependencies
 pip3 install requests beautifulsoup4
 
-# Generate a React skill in one command
-python3 cli/doc_scraper.py --config configs/react.json --enhance-local
+# Run scripts directly (old method)
+python3 src/skill_seekers/cli/doc_scraper.py --config configs/react.json
 
 # Upload output/react.zip to Claude - Done!
 ```
 
 **Time:** ~25 minutes | **Quality:** Production-ready | **Cost:** Free
 
-### Option 3: Use CLI for PDF Documentation
+## Usage Examples
+
+### Documentation Scraping
 
 ```bash
-# Install PDF support
-pip3 install PyMuPDF
+# Scrape documentation website
+skill-seekers scrape --config configs/react.json
 
+# Quick scrape without config
+skill-seekers scrape --url https://react.dev --name react
+
+# With async mode (3x faster)
+skill-seekers scrape --config configs/godot.json --async --workers 8
+```
+
+### PDF Extraction
+
+```bash
 # Basic PDF extraction
-python3 cli/pdf_scraper.py --pdf docs/manual.pdf --name myskill
+skill-seekers pdf --pdf docs/manual.pdf --name myskill
 
 # Advanced features
-python3 cli/pdf_scraper.py --pdf docs/manual.pdf --name myskill \
+skill-seekers pdf --pdf docs/manual.pdf --name myskill \
     --extract-tables \        # Extract tables
     --parallel \              # Fast parallel processing
     --workers 8               # Use 8 CPU cores
 
 # Scanned PDFs (requires: pip install pytesseract Pillow)
-python3 cli/pdf_scraper.py --pdf docs/scanned.pdf --name myskill --ocr
+skill-seekers pdf --pdf docs/scanned.pdf --name myskill --ocr
 
 # Password-protected PDFs
-python3 cli/pdf_scraper.py --pdf docs/encrypted.pdf --name myskill --password mypassword
-
-# Upload output/myskill.zip to Claude - Done!
+skill-seekers pdf --pdf docs/encrypted.pdf --name myskill --password mypassword
 ```
 
 **Time:** ~5-15 minutes (or 2-5 minutes with parallel) | **Quality:** Production-ready | **Cost:** Free
 
-**Advanced Features:**
-- ✅ OCR for scanned PDFs (requires pytesseract)
-- ✅ Password-protected PDF support
-- ✅ Table extraction
-- ✅ Parallel processing (3x faster)
-- ✅ Intelligent caching
-
-### Option 4: Use CLI for GitHub Repository
+### GitHub Repository Scraping
 
 ```bash
-# Install GitHub support
-pip3 install PyGithub
-
 # Basic repository scraping
-python3 cli/github_scraper.py --repo facebook/react
+skill-seekers github --repo facebook/react
 
 # Using a config file
-python3 cli/github_scraper.py --config configs/react_github.json
+skill-seekers github --config configs/react_github.json
 
 # With authentication (higher rate limits)
 export GITHUB_TOKEN=ghp_your_token_here
-python3 cli/github_scraper.py --repo facebook/react
+skill-seekers github --repo facebook/react
 
 # Customize what to include
-python3 cli/github_scraper.py --repo django/django \
+skill-seekers github --repo django/django \
     --include-issues \        # Extract GitHub Issues
     --max-issues 100 \        # Limit issue count
     --include-changelog \     # Extract CHANGELOG.md
     --include-releases        # Extract GitHub Releases
-
-# MCP usage in Claude Code
-"Scrape GitHub repository facebook/react"
-
-# Upload output/react.zip to Claude - Done!
 ```
 
 **Time:** ~5-10 minutes | **Quality:** Production-ready | **Cost:** Free
 
-**What Gets Extracted:**
-- ✅ README.md and documentation files
-- ✅ GitHub Issues (open/closed, labels, milestones)
-- ✅ CHANGELOG.md and version history
-- ✅ GitHub Releases with release notes
-- ✅ Repository metadata (stars, language, topics)
-- ✅ File structure and language breakdown
-
-### Option 5: Unified Multi-Source Scraping (**NEW - v2.0.0**)
+### Unified Multi-Source Scraping (**NEW - v2.0.0**)
 
 **The Problem:** Documentation and code often drift apart. Docs might be outdated, missing features that exist in code, or documenting features that were removed.
 
 **The Solution:** Combine documentation + GitHub + PDF into one unified skill that shows BOTH what's documented AND what actually exists, with clear warnings about discrepancies.
 
 ```bash
-# Create unified config (mix documentation + GitHub)
+# Use existing unified configs
+skill-seekers unified --config configs/react_unified.json
+skill-seekers unified --config configs/django_unified.json
+
+# Or create unified config (mix documentation + GitHub)
 cat > configs/myframework_unified.json << 'EOF'
 {
   "name": "myframework",
@@ -217,8 +271,10 @@ cat > configs/myframework_unified.json << 'EOF'
 EOF
 
 # Run unified scraper
-python3 cli/unified_scraper.py --config configs/myframework_unified.json
+skill-seekers unified --config configs/myframework_unified.json
 
+# Package and upload
+skill-seekers package output/myframework/
 # Upload output/myframework.zip to Claude - Done!
 ```
 
@@ -374,13 +430,13 @@ source venv/bin/activate  # Run this each time you start a new terminal session
 source venv/bin/activate
 
 # Optional: Estimate pages first (fast, 1-2 minutes)
-python3 cli/estimate_pages.py configs/godot.json
+skill-seekers estimate configs/godot.json
 
 # Use Godot preset
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 
 # Use React preset
-python3 cli/doc_scraper.py --config configs/react.json
+skill-seekers scrape --config configs/react.json
 
 # See all presets
 ls configs/
@@ -389,13 +445,13 @@ ls configs/
 ### Interactive Mode
 
 ```bash
-python3 cli/doc_scraper.py --interactive
+skill-seekers scrape --interactive
 ```
 
 ### Quick Mode
 
 ```bash
-python3 cli/doc_scraper.py \
+skill-seekers scrape \
   --name react \
   --url https://react.dev/ \
   --description "React framework for UIs"
@@ -412,10 +468,10 @@ Once your skill is packaged, you need to upload it to Claude:
 export ANTHROPIC_API_KEY=sk-ant-...
 
 # Package and upload automatically
-python3 cli/package_skill.py output/react/ --upload
+skill-seekers package output/react/ --upload
 
 # OR upload existing .zip
-python3 cli/upload_skill.py output/react.zip
+skill-seekers upload output/react.zip
 ```
 
 **Benefits:**
@@ -430,7 +486,7 @@ python3 cli/upload_skill.py output/react.zip
 
 ```bash
 # Package skill
-python3 cli/package_skill.py output/react/
+skill-seekers package output/react/
 
 # This will:
 # 1. Create output/react.zip
@@ -502,7 +558,7 @@ doc-to-skill/
 ### 1. Fast Page Estimation (NEW!)
 
 ```bash
-python3 cli/estimate_pages.py configs/react.json
+skill-seekers estimate configs/react.json
 
 # Output:
 📊 ESTIMATION RESULTS
@@ -522,7 +578,7 @@ python3 cli/estimate_pages.py configs/react.json
 ### 2. Auto-Detect Existing Data
 
 ```bash
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 
 # If data exists:
 ✓ Found existing data: 245 pages
@@ -567,23 +623,23 @@ Automatically infers categories from:
 
 ```bash
 # Scrape once
-python3 cli/doc_scraper.py --config configs/react.json
+skill-seekers scrape --config configs/react.json
 
 # Later, just rebuild (instant)
-python3 cli/doc_scraper.py --config configs/react.json --skip-scrape
+skill-seekers scrape --config configs/react.json --skip-scrape
 ```
 
 ### 6. Async Mode for Faster Scraping (2-3x Speed!)
 
 ```bash
 # Enable async mode with 8 workers (recommended for large docs)
-python3 cli/doc_scraper.py --config configs/react.json --async --workers 8
+skill-seekers scrape --config configs/react.json --async --workers 8
 
 # Small docs (~100-500 pages)
-python3 cli/doc_scraper.py --config configs/mydocs.json --async --workers 4
+skill-seekers scrape --config configs/mydocs.json --async --workers 4
 
 # Large docs (2000+ pages) with no rate limiting
-python3 cli/doc_scraper.py --config configs/largedocs.json --async --workers 8 --no-rate-limit
+skill-seekers scrape --config configs/largedocs.json --async --workers 8 --no-rate-limit
 ```
 
 **Performance Comparison:**
@@ -605,16 +661,16 @@ python3 cli/doc_scraper.py --config configs/largedocs.json --async --workers 8 -
 # Option 1: During scraping (API-based, requires API key)
 pip3 install anthropic
 export ANTHROPIC_API_KEY=sk-ant-...
-python3 cli/doc_scraper.py --config configs/react.json --enhance
+skill-seekers scrape --config configs/react.json --enhance
 
 # Option 2: During scraping (LOCAL, no API key - uses Claude Code Max)
-python3 cli/doc_scraper.py --config configs/react.json --enhance-local
+skill-seekers scrape --config configs/react.json --enhance-local
 
 # Option 3: After scraping (API-based, standalone)
-python3 cli/enhance_skill.py output/react/
+skill-seekers enhance output/react/
 
 # Option 4: After scraping (LOCAL, no API key, standalone)
-python3 cli/enhance_skill_local.py output/react/
+skill-seekers enhance output/react/
 ```
 
 **What it does:**
@@ -640,10 +696,10 @@ python3 cli/enhance_skill_local.py output/react/
 
 ```bash
 # 1. Estimate first (discover page count)
-python3 cli/estimate_pages.py configs/godot.json
+skill-seekers estimate configs/godot.json
 
 # 2. Auto-split into focused sub-skills
-python3 cli/split_config.py configs/godot.json --strategy router
+python3 -m skill_seekers.cli.split_config configs/godot.json --strategy router
 
 # Creates:
 # - godot-scripting.json (5K pages)
@@ -654,15 +710,15 @@ python3 cli/split_config.py configs/godot.json --strategy router
 
 # 3. Scrape all in parallel (4-8 hours instead of 20-40!)
 for config in configs/godot-*.json; do
-  python3 cli/doc_scraper.py --config $config &
+  skill-seekers scrape --config $config &
 done
 wait
 
 # 4. Generate intelligent router/hub skill
-python3 cli/generate_router.py configs/godot-*.json
+python3 -m skill_seekers.cli.generate_router configs/godot-*.json
 
 # 5. Package all skills
-python3 cli/package_multi.py output/godot*/
+python3 -m skill_seekers.cli.package_multi output/godot*/
 
 # 6. Upload all .zip files to Claude
 # Users just ask questions naturally!
@@ -712,7 +768,7 @@ python3 cli/package_multi.py output/godot*/
 }
 
 # If scrape is interrupted (Ctrl+C or crash)
-python3 cli/doc_scraper.py --config configs/godot.json --resume
+skill-seekers scrape --config configs/godot.json --resume
 
 # Resume from last checkpoint
 ✅ Resuming from checkpoint (12,450 pages scraped)
@@ -720,7 +776,7 @@ python3 cli/doc_scraper.py --config configs/godot.json --resume
 🔄 Continuing from where we left off...
 
 # Start fresh (clear checkpoint)
-python3 cli/doc_scraper.py --config configs/godot.json --fresh
+skill-seekers scrape --config configs/godot.json --fresh
 ```
 
 **Benefits:**
@@ -735,14 +791,14 @@ python3 cli/doc_scraper.py --config configs/godot.json --fresh
 
 ```bash
 # 1. Scrape + Build + AI Enhancement (LOCAL, no API key)
-python3 cli/doc_scraper.py --config configs/godot.json --enhance-local
+skill-seekers scrape --config configs/godot.json --enhance-local
 
 # 2. Wait for new terminal to close (enhancement completes)
 # Check the enhanced SKILL.md:
 cat output/godot/SKILL.md
 
 # 3. Package
-python3 cli/package_skill.py output/godot/
+skill-seekers package output/godot/
 
 # 4. Done! You have godot.zip with excellent SKILL.md
 ```
@@ -753,11 +809,11 @@ python3 cli/package_skill.py output/godot/
 
 ```bash
 # 1. Use cached data + Local Enhancement
-python3 cli/doc_scraper.py --config configs/godot.json --skip-scrape
-python3 cli/enhance_skill_local.py output/godot/
+skill-seekers scrape --config configs/godot.json --skip-scrape
+skill-seekers enhance output/godot/
 
 # 2. Package
-python3 cli/package_skill.py output/godot/
+skill-seekers package output/godot/
 
 # 3. Done!
 ```
@@ -768,10 +824,10 @@ python3 cli/package_skill.py output/godot/
 
 ```bash
 # 1. Scrape + Build (no enhancement)
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 
 # 2. Package
-python3 cli/package_skill.py output/godot/
+skill-seekers package output/godot/
 
 # 3. Done! (SKILL.md will be basic template)
 ```
@@ -794,22 +850,22 @@ python3 cli/package_skill.py output/godot/
 
 ```bash
 # Godot
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 
 # React
-python3 cli/doc_scraper.py --config configs/react.json
+skill-seekers scrape --config configs/react.json
 
 # Vue
-python3 cli/doc_scraper.py --config configs/vue.json
+skill-seekers scrape --config configs/vue.json
 
 # Django
-python3 cli/doc_scraper.py --config configs/django.json
+skill-seekers scrape --config configs/django.json
 
 # FastAPI
-python3 cli/doc_scraper.py --config configs/fastapi.json
+skill-seekers scrape --config configs/fastapi.json
 
 # Ansible
-python3 cli/doc_scraper.py --config configs/ansible-core.json
+skill-seekers scrape --config configs/ansible-core.json
 ```
 
 ## 🎨 Creating Your Own Config
@@ -817,7 +873,7 @@ python3 cli/doc_scraper.py --config configs/ansible-core.json
 ### Option 1: Interactive
 
 ```bash
-python3 cli/doc_scraper.py --interactive
+skill-seekers scrape --interactive
 # Follow prompts, it will create the config for you
 ```
 
@@ -831,7 +887,7 @@ cp configs/react.json configs/myframework.json
 nano configs/myframework.json
 
 # Use it
-python3 cli/doc_scraper.py --config configs/myframework.json
+skill-seekers scrape --config configs/myframework.json
 ```
 
 ### Config Structure
@@ -882,19 +938,19 @@ output/
 
 ```bash
 # Interactive mode
-python3 cli/doc_scraper.py --interactive
+skill-seekers scrape --interactive
 
 # Use config file
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 
 # Quick mode
-python3 cli/doc_scraper.py --name react --url https://react.dev/
+skill-seekers scrape --name react --url https://react.dev/
 
 # Skip scraping (use existing data)
-python3 cli/doc_scraper.py --config configs/godot.json --skip-scrape
+skill-seekers scrape --config configs/godot.json --skip-scrape
 
 # With description
-python3 cli/doc_scraper.py \
+skill-seekers scrape \
   --name react \
   --url https://react.dev/ \
   --description "React framework for building UIs"
@@ -915,11 +971,11 @@ Edit `max_pages` in config to test:
 
 ```bash
 # Scrape once
-python3 cli/doc_scraper.py --config configs/react.json
+skill-seekers scrape --config configs/react.json
 
 # Rebuild multiple times (instant)
-python3 cli/doc_scraper.py --config configs/react.json --skip-scrape
-python3 cli/doc_scraper.py --config configs/react.json --skip-scrape
+skill-seekers scrape --config configs/react.json --skip-scrape
+skill-seekers scrape --config configs/react.json --skip-scrape
 ```
 
 ### 3. Finding Selectors
@@ -956,7 +1012,7 @@ cat output/godot/references/index.md  # Categories
 ```bash
 # Force re-scrape
 rm -rf output/myframework_data/
-python3 cli/doc_scraper.py --config configs/myframework.json
+skill-seekers scrape --config configs/myframework.json
 ```
 
 ### Categories Not Good?
@@ -968,7 +1024,7 @@ Edit the config `categories` section with better keywords.
 rm -rf output/godot_data/
 
 # Re-scrape
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 ```
 
 ## 📈 Performance
@@ -1013,6 +1069,7 @@ python3 cli/doc_scraper.py --config configs/godot.json
 - **[docs/LARGE_DOCUMENTATION.md](docs/LARGE_DOCUMENTATION.md)** - Handle 10K-40K+ page docs
 - **[ASYNC_SUPPORT.md](ASYNC_SUPPORT.md)** - Async mode guide (2-3x faster scraping)
 - **[docs/ENHANCEMENT.md](docs/ENHANCEMENT.md)** - AI enhancement guide
+- **[docs/TERMINAL_SELECTION.md](docs/TERMINAL_SELECTION.md)** - Configure terminal app for local enhancement
 - **[docs/UPLOAD_GUIDE.md](docs/UPLOAD_GUIDE.md)** - How to upload skills to Claude
 - **[docs/MCP_SETUP.md](docs/MCP_SETUP.md)** - MCP integration setup
 
@@ -1024,13 +1081,13 @@ python3 cli/doc_scraper.py --config configs/godot.json
 
 ```bash
 # Try Godot
-python3 cli/doc_scraper.py --config configs/godot.json
+skill-seekers scrape --config configs/godot.json
 
 # Try React
-python3 cli/doc_scraper.py --config configs/react.json
+skill-seekers scrape --config configs/react.json
 
 # Or go interactive
-python3 cli/doc_scraper.py --interactive
+skill-seekers scrape --interactive
 ```
 
 ## 📝 License

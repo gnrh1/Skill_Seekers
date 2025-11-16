@@ -9,9 +9,9 @@ Converts GitHub repositories into Claude AI skills by extracting:
 - Usage examples from tests
 
 Usage:
-    python3 cli/github_scraper.py --repo facebook/react
-    python3 cli/github_scraper.py --config configs/react_github.json
-    python3 cli/github_scraper.py --repo owner/repo --token $GITHUB_TOKEN
+    skill-seekers github --repo facebook/react
+    skill-seekers github --config configs/react_github.json
+    skill-seekers github --repo owner/repo --token $GITHUB_TOKEN
 """
 
 import os
@@ -536,7 +536,18 @@ class GitHubToSkillConverter:
         """Generate main SKILL.md file."""
         repo_info = self.data.get('repo_info', {})
 
-        skill_content = f"""# {repo_info.get('name', self.name)}
+        # Generate skill name (lowercase, hyphens only, max 64 chars)
+        skill_name = self.name.lower().replace('_', '-').replace(' ', '-')[:64]
+
+        # Truncate description to 1024 chars if needed
+        desc = self.description[:1024] if len(self.description) > 1024 else self.description
+
+        skill_content = f"""---
+name: {skill_name}
+description: {desc}
+---
+
+# {repo_info.get('name', self.name)}
 
 {self.description}
 
@@ -724,9 +735,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python3 cli/github_scraper.py --repo facebook/react
-  python3 cli/github_scraper.py --config configs/react_github.json
-  python3 cli/github_scraper.py --repo owner/repo --token $GITHUB_TOKEN
+  skill-seekers github --repo facebook/react
+  skill-seekers github --config configs/react_github.json
+  skill-seekers github --repo owner/repo --token $GITHUB_TOKEN
         """
     )
 
@@ -775,7 +786,7 @@ Examples:
         converter.build_skill()
 
         logger.info(f"\n✅ Success! Skill created at: output/{config.get('name', config['repo'].split('/')[-1])}/")
-        logger.info(f"Next step: python3 cli/package_skill.py output/{config.get('name', config['repo'].split('/')[-1])}/")
+        logger.info(f"Next step: skill-seekers-package output/{config.get('name', config['repo'].split('/')[-1])}/")
 
     except Exception as e:
         logger.error(f"Error: {e}")
