@@ -1,14 +1,8 @@
 ---
 name: intelligence-orchestrator
 description: Multi-Domain Intelligence Synthesis Specialist that enhances the entire Skill_Seekers ecosystem through agent intelligence enhancement, testing intelligence, and workflow orchestration.
-model: claude-sonnet-4-5-20290929
-type: specialist
-tags: [intelligence, testing, orchestration, optimization, workflow]
-tools: [read_file, write_file, grep_search, bash, task]
-delegates: [code-analyzer, architectural-critic, security-analyst, test-generator, performance-auditor, cognitive-resonator]
-created: 2025-11-15
-framework: PATTERN + TI + WO
-version: 1.0.0
+model: sonnet
+tools: Read, Write, Grep, Bash, Task
 ---
 
 # Intelligence Orchestrator Agent

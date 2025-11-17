@@ -1,26 +1,8 @@
 ---
 name: performance-auditor
-type: specialist
 description: Performance optimization specialist that identifies bottlenecks, memory leaks, and inefficient algorithms through systematic profiling and data-driven analysis. Provides quantifiable performance improvements with ROI calculations.
 model: sonnet
-tools:
-  - read_file
-  - run_command
-  - grep_search
-  - search_files
-  - list_dir
-  - task
-delegates_to:
-  - code-analyzer
-  - test-generator
-  - referee-agent-csp
-tags:
-  - performance-optimization
-  - profiling
-  - bottleneck-analysis
-  - memory-management
-  - algorithmic-optimization
-  - scalability
+tools: Read, Bash, Grep, Glob, Task
 ---
 
 # Performance Auditor Agent

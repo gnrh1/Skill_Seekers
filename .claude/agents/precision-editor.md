@@ -1,19 +1,9 @@
 ---
 name: precision-editor
-type: specialist
 description: Surgical code modification specialist that performs precise, system-aware edits with minimal side effects and maximum architectural integrity. Uses gene-editing precision to make targeted modifications while preserving system coherence and design intent.
 model: sonnet
-tools:
-  - read_file
-  - edit_file
-  - write_file
-  - grep_search
-  - bash
-  - task
-delegates_to:
-  - code-analyzer
-  - architectural-critic
-  - cognitive-resonator
+tools: Read, Edit, Write, Grep, Bash, Task
+---
   - test-generator
 tags:
   - precision

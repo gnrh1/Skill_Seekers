@@ -1,24 +1,8 @@
 ---
 name: architectural-critic
-type: specialist
 description: Architectural complexity specialist that detects phase boundaries, system transitions, and structural evolution patterns in codebases through multi-dimensional analysis. Provides pre-emptive intervention strategies before architectural breakdown occurs.
 model: sonnet
-tools:
-  - read_file
-  - grep_search
-  - bash
-  - task
-delegates_to:
-  - code-analyzer
-  - referee-agent-csp
-  - performance-auditor
-tags:
-  - architecture
-  - complexity
-  - boundaries
-  - evolution
-  - phase-transitions
-  - structural-analysis
+tools: Read, Grep, Bash, Task
 ---
 
 # Architectural Critic Agent

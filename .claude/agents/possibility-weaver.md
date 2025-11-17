@@ -1,14 +1,9 @@
 ---
 name: possibility-weaver
-type: specialist
 description: Creative catalyst agent that introduces novel perspectives and beneficial constraints to break developers out of local optima. Uses constraint innovation and perspective synthesis to expand solution spaces while maintaining core system invariants.
 model: sonnet
-tools:
-  - read_file
-  - write_file
-  - grep_search
-  - bash
-  - task
+tools: Read, Write, Grep, Bash, Task
+---
 delegates_to:
   - code-analyzer
   - architectural-critic

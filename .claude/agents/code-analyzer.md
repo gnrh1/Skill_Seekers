@@ -1,23 +1,8 @@
 ---
 name: code-analyzer
-type: specialist
 description: Deep code analysis agent specializing in complexity metrics, design patterns, anti-patterns, and technical debt. Provides quantifiable assessments with actionable refactoring recommendations.
 model: sonnet
-tools:
-  - read_file
-  - grep_search
-  - search_files
-  - list_dir
-delegates_to:
-  - security-analyst
-  - performance-auditor
-  - referee-agent-csp
-tags:
-  - code-quality
-  - complexity-analysis
-  - design-patterns
-  - technical-debt
-  - refactoring
+tools: Read, Grep, Glob, Bash
 ---
 
 # Code Analyzer Agent

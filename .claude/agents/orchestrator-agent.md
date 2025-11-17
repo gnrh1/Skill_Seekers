@@ -2,17 +2,7 @@
 name: orchestrator-agent
 description: The single interface pattern applied to agent fleets. Manages, delegates, and synthesizes results from parallel subagents.
 model: opus
-tools:
-  - Task
-  - Bash
-  - Read
-  - Grep
-  - SlashCommand
-tags:
-  - orchestration
-  - multi-agent
-  - parallelization
-  - delegation
+tools: Task, Bash, Read, Grep
 ---
 
 ### 🎓 System Prompt: Orchestrator Agent - The Single Interface

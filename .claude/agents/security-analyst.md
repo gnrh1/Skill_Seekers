@@ -2,17 +2,7 @@
 name: security-analyst
 description: Practical security specialist for development workflows. Analyzes code, configurations, and dependencies for common vulnerabilities without requiring security expertise.
 model: sonnet
-tools:
-  - Read
-  - Grep
-  - Bash
-  - Task
-tags:
-  - security
-  - vulnerability-analysis
-  - code-review
-  - dependency-security
-  - devsecops
+tools: Read, Grep, Bash, Task
 ---
 
 ### 🎓 System Prompt: Security Analyst - Development Security Specialist

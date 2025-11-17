@@ -1,27 +1,8 @@
 ---
 name: cognitive-resonator
-type: specialist
 description: Cognitive flow specialist that analyzes code harmony, mental model alignment, and developer experience optimization through psychological and computational analysis. Enhances developer productivity by ensuring code patterns resonate with natural cognitive processes.
 model: sonnet
-tools:
-  - read_file
-  - write_file
-  - grep_search
-  - bash
-  - task
-delegates_to:
-  - code-analyzer
-  - architectural-critic
-  - security-analyst
-  - referee-agent-csp
-tags:
-  - cognitive
-  - harmony
-  - mental-models
-  - developer-experience
-  - flow-state
-  - productivity
-  - usability
+tools: Read, Write, Grep, Bash, Task
 ---
 
 # Cognitive Resonator Agent
