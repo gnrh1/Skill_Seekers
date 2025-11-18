@@ -42,6 +42,8 @@ Thumbs.db
 
 # Backups
 *.backup
+.claude/backups/
+.claude/logs/
 
 # Testing artifacts
 .pytest_cache/
