@@ -1,0 +1,37 @@
+{
+  "orchestration": {
+    "max_concurrent_tasks": 5,
+    "task_timeout_minutes": 30,
+    "backup_deployment_threshold": 0.7,
+    "auto_retry_enabled": true,
+    "max_retry_attempts": 2
+  },
+  "agent_mappings": {
+    "precision-editor": {
+      "backup_priority": 1,
+      "critical_path": true,
+      "expected_duration_minutes": 10
+    },
+    "security-analyst": {
+      "backup_priority": 1,
+      "critical_path": true,
+      "expected_duration_minutes": 15
+    },
+    "test-generator": {
+      "backup_priority": 2,
+      "critical_path": false,
+      "expected_duration_minutes": 12
+    },
+    "performance-auditor": {
+      "backup_priority": 2,
+      "critical_path": false,
+      "expected_duration_minutes": 8
+    }
+  },
+  "resilience_strategies": {
+    "timeout_handling": "deploy_backup",
+    "stall_handling": "stimulate_then_backup",
+    "circuit_break_handling": "skip_with_manual_intervention",
+    "critical_task_handling": "retry_with_different_agent"
+  }
+}

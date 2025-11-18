@@ -1,0 +1,78 @@
+{
+  "agents": [
+    {
+      "name": "precision-editor",
+      "priority": "high",
+      "timeout_seconds": 180,
+      "retry_attempts": 2,
+      "backup_agents": [
+        "code-analyzer",
+        "architectural-critic"
+      ],
+      "can_skip": true,
+      "manual_intervention_required": true
+    },
+    {
+      "name": "security-analyst",
+      "priority": "critical",
+      "timeout_seconds": 600,
+      "retry_attempts": 3,
+      "backup_agents": [],
+      "can_skip": false,
+      "manual_intervention_required": false
+    },
+    {
+      "name": "test-generator",
+      "priority": "medium",
+      "timeout_seconds": 420,
+      "retry_attempts": 2,
+      "backup_agents": [
+        "code-analyzer"
+      ],
+      "can_skip": true,
+      "manual_intervention_required": false
+    },
+    {
+      "name": "performance-auditor",
+      "priority": "medium",
+      "timeout_seconds": 480,
+      "retry_attempts": 2,
+      "backup_agents": [
+        "code-analyzer"
+      ],
+      "can_skip": true,
+      "manual_intervention_required": false
+    },
+    {
+      "name": "architectural-critic",
+      "priority": "medium",
+      "timeout_seconds": 300,
+      "retry_attempts": 2,
+      "backup_agents": [
+        "code-analyzer"
+      ],
+      "can_skip": true,
+      "manual_intervention_required": false
+    },
+    {
+      "name": "cognitive-resonator",
+      "priority": "low",
+      "timeout_seconds": 240,
+      "retry_attempts": 1,
+      "backup_agents": [],
+      "can_skip": true,
+      "manual_intervention_required": false
+    },
+    {
+      "name": "referee-agent-csp",
+      "priority": "high",
+      "timeout_seconds": 300,
+      "retry_attempts": 2,
+      "backup_agents": [
+        "orchestrator-agent"
+      ],
+      "can_skip": false,
+      "manual_intervention_required": false
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "monitoring": {
+    "enabled": true,
+    "default_timeout_seconds": 300,
+    "default_stall_seconds": 120,
+    "check_interval_seconds": 30,
+    "auto_recovery": {
+      "enabled": true,
+      "max_recovery_attempts": 2,
+      "recovery_strategies": [
+        "stimulate",
+        "restart",
+        "skip"
+      ]
+    }
+  },
+  "agent_thresholds": {
+    "precision-editor": {
+      "timeout_seconds": 180,
+      "stall_seconds": 60,
+      "min_tool_usage": 1
+    },
+    "security-analyst": {
+      "timeout_seconds": 600,
+      "stall_seconds": 180,
+      "min_tool_usage": 2
+    },
+    "test-generator": {
+      "timeout_seconds": 420,
+      "stall_seconds": 120,
+      "min_tool_usage": 3
+    },
+    "performance-auditor": {
+      "timeout_seconds": 480,
+      "stall_seconds": 150,
+      "min_tool_usage": 2
+    }
+  },
+  "alerts": {
+    "stall_alert": true,
+    "timeout_alert": true,
+    "recovery_alert": true,
+    "notification_channels": [
+      "log",
+      "file"
+    ]
+  }
+}

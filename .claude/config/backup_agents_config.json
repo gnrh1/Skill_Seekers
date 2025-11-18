@@ -1,0 +1,75 @@
+{
+  "backup_agents": [
+    {
+      "name": "code-analyzer-generalist",
+      "capabilities": [
+        "conflict_resolution",
+        "code_analysis",
+        "basic_editing"
+      ],
+      "priority": 1,
+      "max_task_time": 300,
+      "can_handle_critical": false,
+      "delegation_chain": [
+        "code-analyzer"
+      ]
+    },
+    {
+      "name": "precision-editor-lite",
+      "capabilities": [
+        "simple_conflicts",
+        "text_editing",
+        "basic_validation"
+      ],
+      "priority": 2,
+      "max_task_time": 180,
+      "can_handle_critical": false,
+      "delegation_chain": [
+        "precision-editor"
+      ]
+    },
+    {
+      "name": "security-analyst-backup",
+      "capabilities": [
+        "cve_scanning",
+        "dependency_check",
+        "security_validation"
+      ],
+      "priority": 1,
+      "max_task_time": 400,
+      "can_handle_critical": true,
+      "delegation_chain": [
+        "security-analyst"
+      ]
+    },
+    {
+      "name": "test-generator-quick",
+      "capabilities": [
+        "basic_tests",
+        "compatibility_checks",
+        "validation"
+      ],
+      "priority": 2,
+      "max_task_time": 240,
+      "can_handle_critical": false,
+      "delegation_chain": [
+        "test-generator"
+      ]
+    },
+    {
+      "name": "orchestrator-emergency",
+      "capabilities": [
+        "emergency_synthesis",
+        "basic_coordination",
+        "status_reporting"
+      ],
+      "priority": 3,
+      "max_task_time": 180,
+      "can_handle_critical": true,
+      "delegation_chain": [
+        "orchestrator-agent",
+        "referee-agent-csp"
+      ]
+    }
+  ]
+}

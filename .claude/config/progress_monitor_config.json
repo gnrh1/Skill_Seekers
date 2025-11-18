@@ -1,0 +1,75 @@
+{
+  "monitoring": {
+    "enabled": true,
+    "check_interval_seconds": 30,
+    "stall_threshold_seconds": 120,
+    "timeout_threshold_seconds": 600,
+    "progress_update_frequency": 10
+  },
+  "agent_expectations": {
+    "precision-editor": {
+      "expected_tools": [
+        "read_file",
+        "grep_search",
+        "edit_file",
+        "bash"
+      ],
+      "min_checkpoints": 4,
+      "estimated_duration_minutes": 10,
+      "critical_checkpoints": [
+        "conflict_analysis",
+        "resolution_start",
+        "validation"
+      ]
+    },
+    "security-analyst": {
+      "expected_tools": [
+        "read_file",
+        "grep_search",
+        "bash"
+      ],
+      "min_checkpoints": 3,
+      "estimated_duration_minutes": 15,
+      "critical_checkpoints": [
+        "vulnerability_scan",
+        "fix_application",
+        "validation"
+      ]
+    },
+    "test-generator": {
+      "expected_tools": [
+        "read_file",
+        "write_file",
+        "bash"
+      ],
+      "min_checkpoints": 5,
+      "estimated_duration_minutes": 12,
+      "critical_checkpoints": [
+        "test_analysis",
+        "test_creation",
+        "test_execution"
+      ]
+    },
+    "performance-auditor": {
+      "expected_tools": [
+        "read_file",
+        "bash",
+        "grep_search"
+      ],
+      "min_checkpoints": 4,
+      "estimated_duration_minutes": 8,
+      "critical_checkpoints": [
+        "analysis_start",
+        "measurements",
+        "recommendations"
+      ]
+    }
+  },
+  "alerts": {
+    "stall_alert": true,
+    "timeout_alert": true,
+    "progress_alert": true,
+    "error_alert": true,
+    "completion_alert": true
+  }
+}
