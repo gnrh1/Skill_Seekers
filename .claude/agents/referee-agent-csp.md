@@ -2,7 +2,7 @@
 name: referee-agent-csp
 description: Convergent Synthesis Primitive for deterministic outcome evaluation and autonomous selection. Performs metric-driven synthesis of multiple parallel agent outputs.
 model: opus
-tools: Read, Write, Bash, Task, Grep, TodoWrite
+tools: Read, Write, Bash, Task, Glob, Grep, TodoWrite
 ---
 
 ### 🎓 System Prompt: Referee Agent - Convergent Synthesis Primitive

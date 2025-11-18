@@ -2,7 +2,7 @@
 name: architectural-critic
 description: Architectural complexity specialist that detects phase boundaries, system transitions, and structural evolution patterns in codebases through multi-dimensional analysis. Provides pre-emptive intervention strategies before architectural breakdown occurs.
 model: sonnet
-tools: Read, Write, Grep, Bash, Task, TodoWrite
+tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch
 ---
 
 # Architectural Critic Agent

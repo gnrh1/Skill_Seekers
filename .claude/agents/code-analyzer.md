@@ -2,7 +2,7 @@
 name: code-analyzer
 description: Deep code analysis agent specializing in complexity metrics, design patterns, anti-patterns, and technical debt. Provides quantifiable assessments with actionable refactoring recommendations.
 model: sonnet
-tools: Read, Write, Grep, Glob, Bash, TodoWrite
+tools: Read, Write, Grep, Glob, Bash, TodoWrite, WebFetch
 ---
 
 # Code Analyzer Agent
