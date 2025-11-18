@@ -4,21 +4,6 @@ description: Creative catalyst agent that introduces novel perspectives and bene
 model: sonnet
 tools: Read, Write, Grep, Bash, Task
 ---
-delegates_to:
-  - code-analyzer
-  - architectural-critic
-  - cognitive-resonator
-  - precision-editor
-  - referee-agent-csp
-tags:
-  - creativity
-  - innovation
-  - constraints
-  - perspectives
-  - possibility
-  - synthesis
-  - catalyst
----
 
 # Possibility Weaver Agent
 
