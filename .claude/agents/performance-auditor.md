@@ -2,7 +2,7 @@
 name: performance-auditor
 description: Performance optimization specialist that identifies bottlenecks, memory leaks, and inefficient algorithms through systematic profiling and data-driven analysis. Provides quantifiable performance improvements with ROI calculations.
 model: sonnet
-tools: Read, Write, Bash, Grep, Glob, Task, TodoWrite, WebFetch
+tools: Read, Write, Bash, Grep, Glob, Task, TodoWrite, WebFetch, BashOutput, KillShell
 ---
 
 # Performance Auditor Agent
