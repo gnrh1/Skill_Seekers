@@ -24,7 +24,51 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-logger = logging.getLogger(__name__)
+llogger = logging.getLogger(__name__)
+
+# Official Anthropic Tool Mapping (Phase 1-4 complete toolkit)
+OFFICIAL_TOOL_MAPPING = {
+    # Core file operations
+    "read_file": "Read",
+    "write_file": "Write",
+    "edit_file": "Edit",
+    "grep_search": "Grep",
+    "search_files": "Glob",
+    "bash": "Bash",
+    "task": "Task",
+    "list_dir": "Read",  # Map to Read as alternative
+    
+    # Phase 1: Universal workflow tracking
+    "todo_write": "TodoWrite",
+    "todowrite": "TodoWrite",
+    
+    # Phase 2: External intelligence
+    "web_fetch": "WebFetch",
+    "webfetch": "WebFetch",
+    "web_search": "WebSearch",
+    "websearch": "WebSearch",
+    
+    # Phase 3: Human feedback loop
+    "ask_user_question": "AskUserQuestion",
+    "askuserquestion": "AskUserQuestion",
+    
+    # Phase 4: Specialized tools
+    "notebook_edit": "NotebookEdit",
+    "notebookedit": "NotebookEdit",
+    "bash_output": "BashOutput",
+    "bashoutput": "BashOutput",
+    "kill_shell": "KillShell",
+    "killshell": "KillShell"
+}
+
+# Official Anthropic YAML fields (strict compliance)
+OFFICIAL_YAML_FIELDS = ['name', 'description', 'model', 'tools']
+
+# Valid tool names (lowercase for validation)
+VALID_TOOL_NAMES = list(OFFICIAL_TOOL_MAPPING.keys())
+
+# Capitalized tool names for YAML output
+CAPITALIZED_TOOLS = list(set(OFFICIAL_TOOL_MAPPING.values()))
 
 @dataclass
 class AgentCreationRequest:
@@ -64,6 +108,47 @@ class AgentCreationError(Exception):
         self.details = details
         self.recoverable = recoverable
         super().__init__(f"Agent creation failed in {phase}: {details}")
+
+def standardize_tools(tools: list) -> list:
+    """
+    Convert tool names to official Anthropic capitalized format.
+    Supports both lowercase and mixed-case input.
+    
+    Args:
+        tools: List of tool names (any case)
+    
+    Returns:
+        List of properly capitalized tool names
+    
+    Examples:
+        ['read_file', 'write_file'] -> ['Read', 'Write']
+        ['Read', 'write_file', 'BASH'] -> ['Read', 'Write', 'Bash']
+    """
+    standardized = []
+    for tool in tools:
+        # Normalize to lowercase with underscores
+        normalized = tool.lower().replace('-', '_')
+        # Map to official capitalized name
+        if normalized in OFFICIAL_TOOL_MAPPING:
+            standardized.append(OFFICIAL_TOOL_MAPPING[normalized])
+        else:
+            # If not in mapping, try to capitalize properly
+            # Check if already in capitalized form
+            if tool in CAPITALIZED_TOOLS:
+                standardized.append(tool)
+            else:
+                # Default: title case
+                standardized.append(tool.title())
+    
+    # Remove duplicates while preserving order
+    seen = set()
+    result = []
+    for tool in standardized:
+        if tool not in seen:
+            seen.add(tool)
+            result.append(tool)
+    
+    return result
 
 class RobustAgentCreator:
     """
@@ -119,10 +204,10 @@ class RobustAgentCreator:
             raise AgentValidationError("content", f"Missing required sections: {missing_sections}")
 
         # Tool validation
-        valid_tools = ["read_file", "write_file", "edit_file", "grep_search", "bash", "task", "list_dir"]
+        valid_tools = VALID_TOOL_NAMES + CAPITALIZED_TOOLS  # Accept both formats
         invalid_tools = [tool for tool in request.tools if tool not in valid_tools]
         if invalid_tools:
-            raise AgentValidationError("tools", f"Invalid tools: {invalid_tools}")
+            raise AgentValidationError("tools", f"Invalid tools: {invalid_tools}. Valid tools: {CAPITALIZED_TOOLS}")
 
         logger.info("Input validation passed")
 
@@ -153,17 +238,15 @@ class RobustAgentCreator:
 
             # Add frontmatter if not present
             if not request.content.startswith('---'):
+                # Standardize tools to official capitalized format
+                standardized_tools = standardize_tools(request.tools)
+                
+                # Generate compliant YAML frontmatter (4 fields only per Anthropic spec)
                 frontmatter = f"""---
 name: {request.name}
 description: {request.description}
 model: {request.model}
-type: {request.agent_type}
-tags: {json.dumps(request.tags)}
-tools: {json.dumps(request.tools)}
-delegates: {json.dumps(request.delegates)}
-created: {datetime.now(UTC).isoformat()}
-framework: {request.framework}
-version: 1.0.0
+tools: {', '.join(standardized_tools)}
 ---
 
 """
