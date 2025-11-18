@@ -2,7 +2,7 @@
 name: possibility-weaver
 description: Creative catalyst agent that introduces novel perspectives and beneficial constraints to break developers out of local optima. Uses constraint innovation and perspective synthesis to expand solution spaces while maintaining core system invariants.
 model: sonnet
-tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch
+tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch, AskUserQuestion
 ---
 
 # Possibility Weaver Agent

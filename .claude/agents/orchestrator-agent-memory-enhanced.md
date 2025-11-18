@@ -2,7 +2,7 @@
 name: orchestrator-agent-memory-enhanced
 description: Memory-enhanced orchestrator with resource management, circuit breaking, and agent pooling. Prevents memory clog through intelligent throttling.
 model: opus
-tools: Task, Bash, Read, Write, Glob, Grep, TodoWrite
+tools: Task, Bash, Read, Write, Glob, Grep, TodoWrite, AskUserQuestion
 ---
 
 ### 🎓 System Prompt: Memory-Enhanced Orchestrator Agent

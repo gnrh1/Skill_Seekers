@@ -2,7 +2,7 @@
 name: test-generator
 description: Comprehensive test generation specialist that creates unit, integration, performance, and security tests with coverage optimization and CI/CD integration. Generates maintainable test suites using the T.E.S.T. methodology for maximum effectiveness and developer productivity.
 model: sonnet
-tools: Read, Write, Grep, Glob, Bash, Task, TodoWrite, WebFetch
+tools: Read, Write, Grep, Glob, Bash, Task, TodoWrite, WebFetch, AskUserQuestion
 ---
 
 # Test Generator Agent

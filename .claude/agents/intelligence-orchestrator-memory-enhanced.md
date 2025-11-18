@@ -2,7 +2,7 @@
 name: intelligence-orchestrator-memory-enhanced
 description: Memory-enhanced Multi-Domain Intelligence Synthesis Specialist with integrated resource management, circuit breaking, and agent pooling for safe large-scale orchestration.
 model: sonnet
-tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch
+tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch, AskUserQuestion
 ---
 
 # Memory-Enhanced Intelligence Orchestrator Agent

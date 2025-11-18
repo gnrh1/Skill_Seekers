@@ -2,7 +2,7 @@
 name: precision-editor
 description: Surgical code modification specialist that performs precise, system-aware edits with minimal side effects and maximum architectural integrity. Uses gene-editing precision to make targeted modifications while preserving system coherence and design intent.
 model: sonnet
-tools: Read, Edit, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch
+tools: Read, Edit, Write, Glob, Grep, Bash, Task, TodoWrite, WebFetch, AskUserQuestion
 ---
 
 # Precision Editor Agent
