@@ -22,7 +22,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('.claude/logs/progress_monitor.log'),
+        logging.FileHandler('../logs/progress_monitor.log'),
         logging.StreamHandler()
     ]
 )
@@ -481,7 +481,7 @@ class ProgressMonitor:
 
     def _save_progress_history(self):
         """Save progress history to file"""
-        history_file = Path(".claude/logs/progress_history.json")
+        history_file = Path("../logs/progress_history.json")
 
         try:
             history_data = []

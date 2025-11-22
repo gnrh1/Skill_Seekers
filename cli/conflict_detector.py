@@ -101,34 +101,35 @@ class ConflictDetector:
 
         import re
 
-        # Pattern for common API signatures
+        # Pattern for common API signatures (ordered to prevent conflicts)
         patterns = [
-            # Python style: def name(params) -> return
+            # Python style: def name(params) -> return (most specific, first)
             r'def\s+(\w+)\s*\(([^)]*)\)(?:\s*->\s*(\w+))?',
             # JavaScript style: function name(params)
             r'function\s+(\w+)\s*\(([^)]*)\)',
-            # C++ style: return_type name(params)
-            r'(\w+)\s+(\w+)\s*\(([^)]*)\)',
             # Method style: ClassName.method_name(params)
-            r'(\w+)\.(\w+)\s*\(([^)]*)\)'
+            r'(\w+)\.(\w+)\s*\(([^)]*)\)',
+            # C++ style: return_type name(params) (last, least specific)
+            r'(\w+)\s+(\w+)\s*\(([^)]*)\)'
         ]
 
         for pattern in patterns:
             for match in re.finditer(pattern, content):
                 groups = match.groups()
+                match_pattern = pattern  # Store which pattern matched
 
                 # Parse based on pattern matched
-                if 'def' in pattern:
+                if 'def' in match_pattern:
                     # Python function
                     name = groups[0]
                     params_str = groups[1]
                     return_type = groups[2] if len(groups) > 2 else None
-                elif 'function' in pattern:
+                elif 'function' in match_pattern:
                     # JavaScript function
                     name = groups[0]
                     params_str = groups[1]
                     return_type = None
-                elif '.' in pattern:
+                elif '.' in match_pattern:
                     # Class method
                     class_name = groups[0]
                     method_name = groups[1]

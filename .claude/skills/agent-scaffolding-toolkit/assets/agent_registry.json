@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2025-11-16T04:58:50.552123Z",
+  "generated_at": "2025-11-18T18:38:18.854042+00:00",
   "agents": [
     {
       "name": "code-analyzer",
@@ -8,15 +8,8 @@
       "type": "specialist",
       "description": "Deep code analysis agent specializing in complexity metrics, design patterns, anti-patterns, and technical debt. Provides quantifiable assessments with actionable refactoring recommendations.",
       "tools": [
-        "read_file",
-        "grep_search",
-        "search_files",
-        "list_dir"
-      ],
-      "delegates_to": [
-        "security-analyst",
-        "performance-auditor",
-        "referee-agent-csp"
+        "Read",
+        "Grep"
       ],
       "updated_at": "2025-11-05T04:51:09.381633Z",
       "created_at": "2025-11-04T23:42:38.981041Z",
@@ -32,23 +25,15 @@
       "type": "specialist",
       "description": "Comprehensive test generation specialist that creates unit, integration, performance, and security tests with coverage optimization and CI/CD integration. Generates maintainable test suites using the T.E.S.T. methodology for maximum effectiveness and developer productivity.",
       "tools": [
-        "read_file",
-        "write_file",
-        "grep_search",
-        "search_files",
-        "list_dir",
-        "task",
-        "run_command"
+        "Read",
+        "Write",
+        "Grep",
+        "Bash",
+        "Task"
       ],
-      "delegates_to": [
-        "code-analyzer",
-        "performance-auditor",
-        "security-analyst",
-        "referee-agent-csp"
-      ],
-      "updated_at": "2025-11-05T04:53:23.638821Z",
+      "updated_at": "2025-11-18T04:08:59.321377Z",
       "created_at": "2025-11-04T23:42:46.665188Z",
-      "version": "1.2",
+      "version": "1.3",
       "usage_stats": {
         "invocation_count": 0,
         "success_rate": 1.0
@@ -60,17 +45,10 @@
       "type": "specialist",
       "description": "Performance optimization specialist that identifies bottlenecks, memory leaks, and inefficient algorithms through systematic profiling and data-driven analysis. Provides quantifiable performance improvements with ROI calculations.",
       "tools": [
-        "read_file",
-        "run_command",
-        "grep_search",
-        "search_files",
-        "list_dir",
-        "task"
-      ],
-      "delegates_to": [
-        "code-analyzer",
-        "test-generator",
-        "referee-agent-csp"
+        "Read",
+        "Bash",
+        "Grep",
+        "Task"
       ],
       "updated_at": "2025-11-05T04:52:58.122939Z",
       "created_at": "2025-11-04T23:42:46.762861Z",
@@ -83,7 +61,7 @@
     {
       "name": "security-analyst",
       "file_path": "/Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/agents/security-analyst.md",
-      "type": "unknown",
+      "type": "specialist",
       "description": "Practical security specialist for development workflows. Analyzes code, configurations, and dependencies for common vulnerabilities without requiring security expertise.",
       "tools": [
         "Read",
@@ -91,7 +69,6 @@
         "Bash",
         "Task"
       ],
-      "delegates_to": [],
       "updated_at": "2025-11-16T04:58:50.551374Z",
       "created_at": "2025-11-05T04:50:48.245255Z",
       "version": "1.2",
@@ -106,15 +83,10 @@
       "type": "specialist",
       "description": "Architectural complexity specialist that detects phase boundaries, system transitions, and structural evolution patterns in codebases through multi-dimensional analysis. Provides pre-emptive intervention strategies before architectural breakdown occurs.",
       "tools": [
-        "read_file",
-        "grep_search",
-        "bash",
-        "task"
-      ],
-      "delegates_to": [
-        "code-analyzer",
-        "referee-agent-csp",
-        "performance-auditor"
+        "Read",
+        "Grep",
+        "Bash",
+        "Task"
       ],
       "updated_at": "2025-11-16T03:33:55.298238Z",
       "created_at": "2025-11-16T03:30:27.800873Z",
@@ -130,17 +102,11 @@
       "type": "specialist",
       "description": "Cognitive flow specialist that analyzes code harmony, mental model alignment, and developer experience optimization through psychological and computational analysis. Enhances developer productivity by ensuring code patterns resonate with natural cognitive processes.",
       "tools": [
-        "read_file",
-        "write_file",
-        "grep_search",
-        "bash",
-        "task"
-      ],
-      "delegates_to": [
-        "code-analyzer",
-        "architectural-critic",
-        "security-analyst",
-        "referee-agent-csp"
+        "Read",
+        "Write",
+        "Grep",
+        "Bash",
+        "Task"
       ],
       "updated_at": "2025-11-16T03:36:37.112520Z",
       "created_at": "2025-11-16T03:36:37.112520Z",
@@ -156,22 +122,15 @@
       "type": "specialist",
       "description": "Surgical code modification specialist that performs precise, system-aware edits with minimal side effects and maximum architectural integrity. Uses gene-editing precision to make targeted modifications while preserving system coherence and design intent.",
       "tools": [
-        "read_file",
-        "edit_file",
-        "write_file",
-        "grep_search",
-        "bash",
-        "task"
+        "Read",
+        "Write",
+        "Grep",
+        "Bash",
+        "Task"
       ],
-      "delegates_to": [
-        "code-analyzer",
-        "architectural-critic",
-        "cognitive-resonator",
-        "test-generator"
-      ],
-      "updated_at": "2025-11-16T03:39:22.902933Z",
+      "updated_at": "2025-11-18T04:08:03.847258Z",
       "created_at": "2025-11-16T03:39:22.902933Z",
-      "version": "1.0",
+      "version": "1.1",
       "usage_stats": {
         "invocation_count": 0,
         "success_rate": 1.0
@@ -183,22 +142,15 @@
       "type": "specialist",
       "description": "Creative catalyst agent that introduces novel perspectives and beneficial constraints to break developers out of local optima. Uses constraint innovation and perspective synthesis to expand solution spaces while maintaining core system invariants.",
       "tools": [
-        "read_file",
-        "write_file",
-        "grep_search",
-        "bash",
-        "task"
+        "Read",
+        "Write",
+        "Grep",
+        "Bash",
+        "Task"
       ],
-      "delegates_to": [
-        "code-analyzer",
-        "architectural-critic",
-        "cognitive-resonator",
-        "precision-editor",
-        "referee-agent-csp"
-      ],
-      "updated_at": "2025-11-16T03:40:54.990401Z",
+      "updated_at": "2025-11-18T04:07:29.540725Z",
       "created_at": "2025-11-16T03:40:54.990401Z",
-      "version": "1.0",
+      "version": "1.1",
       "usage_stats": {
         "invocation_count": 0,
         "success_rate": 1.0
@@ -210,13 +162,12 @@
       "type": "specialist",
       "description": "Multi-Domain Intelligence Synthesis Specialist that enhances the entire Skill_Seekers ecosystem through agent intelligence enhancement, testing intelligence, and workflow orchestration.",
       "tools": [
-        "read_file",
-        "write_file",
-        "grep_search",
-        "bash",
-        "task"
+        "Read",
+        "Write",
+        "Grep",
+        "Bash",
+        "Task"
       ],
-      "delegates_to": [],
       "updated_at": "2025-11-16T04:53:52.344133Z",
       "created_at": "2025-11-16T04:39:19.516158Z",
       "version": "1.2",
@@ -226,18 +177,114 @@
       }
     },
     {
+      "name": "test-agent",
       "type": "specialist",
       "description": "Test agent to validate robust creation system",
       "tools": [
-        "read_file",
-        "write_file",
-        "grep_search"
-      ],
-      "delegates_to": [
-        "code-analyzer"
+        "Read",
+        "Write",
+        "Grep"
       ],
       "updated_at": "2025-11-16T04:50:21.581106+00:00",
       "created_at": "2025-11-16T04:50:21.581113+00:00",
+      "version": "1.0",
+      "usage_stats": {
+        "invocation_count": 0,
+        "success_rate": 1.0
+      }
+    },
+    {
+      "name": "orchestrator-agent-memory-enhanced",
+      "file_path": "/Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/agents/orchestrator-agent-memory-enhanced.md",
+      "type": "specialist",
+      "description": "Memory-enhanced orchestrator with resource management, circuit breaking, and agent pooling. Prevents memory clog through intelligent throttling.",
+      "tools": [
+        "Task",
+        "Bash",
+        "Read",
+        "Grep"
+      ],
+      "updated_at": "2025-11-18T04:00:13.094724Z",
+      "created_at": "2025-11-18T04:00:13.094724Z",
+      "version": "1.0",
+      "usage_stats": {
+        "invocation_count": 0,
+        "success_rate": 1.0
+      }
+    },
+    {
+      "name": "intelligence-orchestrator-memory-enhanced",
+      "file_path": "/Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/agents/intelligence-orchestrator-memory-enhanced.md",
+      "type": "specialist",
+      "description": "Memory-enhanced Multi-Domain Intelligence Synthesis Specialist with integrated resource management, circuit breaking, and agent pooling for safe large-scale orchestration.",
+      "tools": [
+        "Read",
+        "Write",
+        "Grep",
+        "Bash",
+        "Task"
+      ],
+      "updated_at": "2025-11-18T04:03:33.618619Z",
+      "created_at": "2025-11-18T04:03:33.618619Z",
+      "version": "1.0",
+      "usage_stats": {
+        "invocation_count": 0,
+        "success_rate": 1.0
+      }
+    },
+    {
+      "name": "referee-agent-csp",
+      "file_path": "/Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/agents/referee-agent-csp.md",
+      "type": "specialist",
+      "description": "Convergent Synthesis Primitive for deterministic outcome evaluation and autonomous selection. Performs metric-driven synthesis of multiple parallel agent outputs.",
+      "tools": [
+        "Read",
+        "Bash",
+        "Task",
+        "Grep"
+      ],
+      "updated_at": "2025-11-18T04:08:34.678296Z",
+      "created_at": "2025-11-18T04:08:34.678296Z",
+      "version": "1.0",
+      "usage_stats": {
+        "invocation_count": 0,
+        "success_rate": 1.0
+      }
+    },
+    {
+      "name": "ecosystem-evolution-architect",
+      "file_path": "/Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/agents/ecosystem-evolution-architect.md",
+      "type": "specialist",
+      "description": "Ecosystem evolution architect that monitors agent performance, manages architectural phase transitions, and develops strategic roadmaps for sustainable multi-agent system growth. Prevents architectural breakdown at scale through phased enhancement strategies.",
+      "tools": [
+        "Task",
+        "Bash",
+        "Read",
+        "Write",
+        "Grep"
+      ],
+      "updated_at": "2025-11-18T18:38:18.853752+00:00",
+      "created_at": "2025-11-18T18:38:18.854036+00:00",
+      "version": "1.0",
+      "usage_stats": {
+        "invocation_count": 0,
+        "success_rate": 1.0
+      }
+    },
+    {
+      "name": "orchestrator-agent",
+      "file_path": "/Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/agents/orchestrator-agent.md",
+      "type": "specialist",
+      "description": "Memory-protected orchestrator for multi-agent coordination. Delegates complex tasks to specialized agents while automatic hooks enforce resource limits.",
+      "tools": [
+        "Task",
+        "Bash",
+        "Read",
+        "Write",
+        "Grep"
+      ],
+      "updated_at": "2025-11-18T18:38:18.853752+00:00",
+      "created_at": "2025-11-18T18:38:18.854036+00:00",
       "version": "1.0",
       "usage_stats": {
         "invocation_count": 0,

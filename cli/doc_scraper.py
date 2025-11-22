@@ -92,7 +92,11 @@ class DocToSkillConverter:
 
         # Parallel scraping config
         self.workers = config.get('workers', 1)
-        self.async_mode = config.get('async_mode', DEFAULT_ASYNC_MODE)
+        # Handle sync_mode override (takes priority over async_mode and default)
+        if config.get('sync_mode', False):
+            self.async_mode = False
+        else:
+            self.async_mode = config.get('async_mode', DEFAULT_ASYNC_MODE)
 
         # State
         self.visited_urls: set[str] = set()
@@ -127,6 +131,10 @@ class DocToSkillConverter:
         Returns:
             bool: True if URL matches include patterns and doesn't match exclude patterns
         """
+        # URL scheme validation for security
+        if not self._is_scheme_safe(url):
+            return False
+
         if not url.startswith(self.base_url):
             return False
 
@@ -141,6 +149,35 @@ class DocToSkillConverter:
             return False
 
         return True
+
+    def _is_scheme_safe(self, url: str) -> bool:
+        """Check if URL scheme is safe for scraping.
+        
+        Args:
+            url (str): URL to check
+            
+        Returns:
+            bool: True if scheme is safe, False otherwise
+        """
+        # Allow relative URLs (no scheme) - check if :// is NOT in URL
+        if not url or '://' not in url:
+            return True
+            
+        try:
+            parsed = urlparse(url)
+            scheme = parsed.scheme.lower()
+            
+            # Only allow http and https schemes
+            if scheme not in ['http', 'https']:
+                return False
+                
+            # Scheme must match base_url scheme
+            base_scheme = urlparse(self.base_url).scheme.lower()
+            return scheme == base_scheme
+            
+        except Exception:
+            # If parsing fails, reject URL
+            return False
 
     def save_checkpoint(self) -> None:
         """Save progress checkpoint"""
@@ -1473,13 +1510,19 @@ def setup_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument('--workers', '-w', type=int, metavar='N',
                        help='Number of parallel workers for faster scraping (default: 1, max: 10)')
     parser.add_argument('--async', dest='async_mode', action='store_true',
-                       help='Enable async mode for better parallel performance (2-3x faster than threads)')
+                       help='Enable async mode for better parallel performance (2-3x faster than threads) [default]')
+    parser.add_argument('--sync', dest='sync_mode', action='store_true',
+                       help='Use sync mode instead of async mode (for compatibility or debugging)')
     parser.add_argument('--no-rate-limit', action='store_true',
                        help='Disable rate limiting completely (same as --rate-limit 0)')
     parser.add_argument('--verbose', '-v', action='store_true',
                        help='Enable verbose output (DEBUG level logging)')
     parser.add_argument('--quiet', '-q', action='store_true',
                        help='Minimize output (WARNING level logging only)')
+    parser.add_argument('--profile', action='store_true',
+                       help='Run performance profiling (benchmarks async vs sync, llms.txt detection)')
+    parser.add_argument('--profile-pages', type=int, default=20, metavar='N',
+                       help='Number of pages to scrape during profiling (default: 20)')
 
     return parser
 
@@ -1551,13 +1594,22 @@ def get_configuration(args: argparse.Namespace) -> Dict[str, Any]:
         if args.workers > 1:
             logger.info("🚀 Parallel scraping enabled: %d workers", args.workers)
 
-    # Apply CLI override for async mode
-    if args.async_mode:
+    # Apply CLI override for sync mode (takes priority over async flag and default)
+    if args.sync_mode:
+        config['async_mode'] = False
+        config['sync_mode'] = True  # Store for test validation
+        logger.info("🔄 Sync mode enabled (compatible mode)")
+    # Apply CLI override for async mode (only if not already set by sync)
+    elif args.async_mode:
         config['async_mode'] = True
         if config.get('workers', 1) > 1:
             logger.info("⚡ Async mode enabled (2-3x faster than threads)")
         else:
             logger.warning("⚠️  Async mode enabled but workers=1. Consider using --workers 4 for better performance")
+    else:
+        # Default async mode (when no flags specified)
+        if config.get('async_mode', True):  # Will use DEFAULT_ASYNC_MODE=True
+            logger.info("⚡ Async mode enabled by default (2-3x faster than threads)")
 
     return config
 
@@ -1725,6 +1777,33 @@ def main() -> None:
     setup_logging(verbose=args.verbose, quiet=args.quiet)
 
     config = get_configuration(args)
+
+    # Performance profiling mode
+    if args.profile:
+        logger.info("\n🚀 PERFORMANCE PROFILING MODE")
+        logger.info("=" * 60)
+        logger.info("This will benchmark async vs sync modes and llms.txt detection.")
+        logger.info(f"Profiling with {args.profile_pages} pages (use --profile-pages to change)")
+        logger.info("")
+        
+        from cli.scraper_profiler import ScraperProfiler
+        
+        profiler = ScraperProfiler(config, max_pages=args.profile_pages)
+        report = profiler.benchmark_full()
+        
+        # Generate and display report
+        report_text = profiler.generate_report(
+            report,
+            output_path=f"output/profiles/{config['name']}_profile.txt"
+        )
+        profiler.save_json_report(
+            report,
+            output_path=f"output/profiles/{config['name']}_profile.json"
+        )
+        
+        print(report_text)
+        logger.info("\n✅ Profiling complete!")
+        return
 
     # Execute scraping and building
     converter = execute_scraping_and_building(config, args)

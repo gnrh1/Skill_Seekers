@@ -20,7 +20,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('.claude/logs/agent_creation.log'),
+        logging.FileHandler('../logs/agent_creation.log'),
         logging.StreamHandler()
     ]
 )

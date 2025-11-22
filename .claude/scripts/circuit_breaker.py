@@ -21,7 +21,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('.claude/logs/circuit_breaker.log'),
+        logging.FileHandler('../logs/circuit_breaker.log'),
         logging.StreamHandler()
     ]
 )

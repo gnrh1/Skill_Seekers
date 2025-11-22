@@ -1,0 +1,145 @@
+# Skill_Seekers Droid Configuration
+# Factory Droid configuration for code review automation and security enforcement
+
+review:
+  guidelines:
+    - "All tests must pass (299 tests) before PR approval"
+    - "Virtual environment must be documented in setup steps"
+    - "Async patterns required for I/O operations (scraping, file access)"
+    - "No hardcoded secrets or API keys anywhere in codebase"
+    - "Configuration changes must update relevant documentation"
+    - "MCP tool changes require integration tests"
+    - "Type hints required for all new function signatures"
+    - "Error handling must cover edge cases with specific exception types"
+    - "Constants.py must be used for magic numbers"
+    
+  checklist:
+    - "[ ] Tests passing: `python3 cli/run_tests.py`"
+    - "[ ] Virtual env activated and documented"
+    - "[ ] No secrets in code/tests/configs"
+    - "[ ] Config backward compatibility maintained"
+    - "[ ] Type hints added to new functions"
+    - "[ ] Error handling comprehensive"
+    - "[ ] Constants used (no magic numbers)"
+    - "[ ] Documentation updated (if needed)"
+    - "[ ] Manual testing completed"
+
+  auto_checks:
+    - test_suite: "python3 cli/run_tests.py"
+      required: true
+      timeout: 300
+    - secret_scan: "git diff --cached | grep -E '(sk-ant-|ghp_|ANTHROPIC_API_KEY=)'"
+      block_on_match: true
+    - type_hint_check: "python3 -m mypy cli/ --ignore-missing-imports"
+      required: false
+
+security:
+  patterns:
+    secrets:
+      - "sk-ant-.*"           # Anthropic API keys
+      - "ghp_.*"              # GitHub personal access tokens
+      - "ANTHROPIC_API_KEY\\s*=\\s*[\"'].*[\"']"  # Environment variable assignments
+      - "api_key\\s*=\\s*[\"'][^\"']{20,}[\"']"   # Generic API keys
+      - "password\\s*=\\s*[\"'].*[\"']"           # Hardcoded passwords
+      - "token\\s*=\\s*[\"'][^\"']{20,}[\"']"     # Auth tokens
+    
+    exclude_paths:
+      - "output/**"           # User-generated content
+      - "venv/**"             # Dependencies
+      - "**/__pycache__/**"   # Python cache
+      - "**/*.pyc"            # Compiled Python
+      - ".pytest_cache/**"    # Pytest cache
+      - "**/.mypy_cache/**"   # MyPy cache
+    
+    scan_on:
+      - pre_commit
+      - pre_push
+      - pr_review
+
+  allowed_secrets:
+    # Example patterns that look like secrets but are safe
+    - "sk-ant-example"      # Documentation example
+    - "ghp_example"         # Documentation example
+
+workflow:
+  test:
+    command: "source venv/bin/activate && python3 cli/run_tests.py"
+    required: true
+    timeout: 300
+    on_fail: "Check that venv is activated and all dependencies installed"
+  
+  lint:
+    command: "source venv/bin/activate && python3 -m pylint cli/*.py --disable=C0111,R0913,R0914"
+    required: false
+    timeout: 120
+  
+  type_check:
+    command: "source venv/bin/activate && python3 -m mypy cli/ --ignore-missing-imports"
+    required: false
+    timeout: 60
+  
+  security_scan:
+    command: "git diff --cached | grep -E '(sk-ant-|ghp_|ANTHROPIC_API_KEY=)'"
+    required: true
+    on_match: "BLOCK - Secret detected in staged changes"
+
+conventions:
+  naming:
+    functions: "snake_case"
+    classes: "PascalCase"
+    constants: "UPPER_SNAKE_CASE"
+    private: "_underscore_prefix"
+  
+  imports:
+    order:
+      - "standard library"
+      - "third party"
+      - "local application"
+    style: "absolute imports preferred"
+  
+  documentation:
+    docstrings: "Google style"
+    type_hints: "required for all functions"
+    comments: "explain why, not what"
+
+performance:
+  async_required_for:
+    - "Network I/O operations"
+    - "File I/O with multiple files"
+    - "Large dataset processing"
+  
+  optimization_rules:
+    - "Use llms.txt detection before HTML scraping (10x faster)"
+    - "Async mode recommended for 200+ pages"
+    - "Connection pooling for HTTP requests"
+    - "Respect rate limits to avoid IP bans"
+
+testing:
+  requirements:
+    - "100% test pass rate (299 tests)"
+    - "Use pytest fixtures for setup"
+    - "Mock external API calls"
+    - "Test both success and failure paths"
+  
+  coverage:
+    minimum: 80
+    target: 90
+    exclude:
+      - "venv/**"
+      - "tests/**"
+      - "**/__pycache__/**"
+
+dependencies:
+  python_version: ">=3.10"
+  core_required:
+    - "requests>=2.32.5"
+    - "beautifulsoup4>=4.14.2"
+    - "pytest>=8.4.2"
+  
+  optional:
+    - "anthropic"      # API enhancement
+    - "PyGithub"       # GitHub scraping
+    - "PyMuPDF"        # PDF extraction
+    - "pytesseract"    # OCR support
+  
+  update_policy: "minor versions allowed, major versions require review"

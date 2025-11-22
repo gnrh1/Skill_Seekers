@@ -21,7 +21,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('.claude/logs/backup_deployer.log'),
+        logging.FileHandler('../logs/backup_deployer.log'),
         logging.StreamHandler()
     ]
 )
@@ -289,7 +289,7 @@ class BackupAgentDeployer:
             "context": context or {}
         }
 
-        log_file = Path(".claude/logs/deployment_log.json")
+        log_file = Path("../logs/deployment_log.json")
         try:
             if log_file.exists():
                 with open(log_file, 'r') as f:
@@ -306,7 +306,7 @@ class BackupAgentDeployer:
 
     def _save_deployment_history(self):
         """Save deployment history"""
-        history_file = Path(".claude/logs/deployment_history.json")
+        history_file = Path("../logs/deployment_history.json")
         try:
             history_data = [
                 {

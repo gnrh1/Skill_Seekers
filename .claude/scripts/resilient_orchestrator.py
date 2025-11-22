@@ -26,7 +26,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - [ResilientOrchestrator] %(message)s',
     handlers=[
-        logging.FileHandler('.claude/logs/resilient_orchestrator.log'),
+        logging.FileHandler('../logs/resilient_orchestrator.log'),
         logging.StreamHandler()
     ]
 )

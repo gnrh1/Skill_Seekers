@@ -1,0 +1,201 @@
+{
+  "droid": "code-analyzer",
+  "timestamp": "2025-11-21T16:28:09.389932",
+  "summary": "Analyzed 12 files. Avg cyclomatic complexity 23.33, maintainability index 21.83/100. Found 7 anti-patterns.",
+  "complexity_analysis": {
+    "files_analyzed": 12,
+    "total_lines": 2623,
+    "avg_cyclomatic_complexity": 23.33,
+    "avg_cognitive_complexity": 32.17,
+    "maintainability_index": 21.83
+  },
+  "metrics_by_file": [
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/package_skill.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 14,
+      "maintainability_index": 23,
+      "technical_debt_estimate_hours": 61.6
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/llms_txt_detector.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 6,
+      "maintainability_index": 36,
+      "technical_debt_estimate_hours": 51.2
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/unified_skill_builder.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 73,
+      "maintainability_index": 3,
+      "technical_debt_estimate_hours": 77.6
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/upload_skill.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 14,
+      "maintainability_index": 23,
+      "technical_debt_estimate_hours": 61.6
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/constants.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 1,
+      "maintainability_index": 35,
+      "technical_debt_estimate_hours": 52.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/llms_txt_downloader.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 8,
+      "maintainability_index": 31,
+      "technical_debt_estimate_hours": 55.2
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/llms_txt_parser.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 7,
+      "maintainability_index": 34,
+      "technical_debt_estimate_hours": 52.8
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/package_multi.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 8,
+      "maintainability_index": 34,
+      "technical_debt_estimate_hours": 52.8
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/conflict_detector.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 51,
+      "maintainability_index": 4,
+      "technical_debt_estimate_hours": 76.8
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/code_analyzer.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 58,
+      "maintainability_index": 3,
+      "technical_debt_estimate_hours": 77.6
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/generate_router.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 26,
+      "maintainability_index": 15,
+      "technical_debt_estimate_hours": 68.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/test_unified_simple.py",
+      "lines_of_code": 0,
+      "cyclomatic_complexity": 14,
+      "maintainability_index": 21,
+      "technical_debt_estimate_hours": 63.2
+    }
+  ],
+  "design_patterns_found": [],
+  "anti_patterns_detected": [
+    {
+      "type": "High Complexity Function",
+      "location": "cli/unified_skill_builder.py:72",
+      "severity": "medium",
+      "description": "Function '_generate_skill_md' has complexity 12 (>10 threshold)",
+      "recommendation": "Break into smaller functions or extract complex logic"
+    },
+    {
+      "type": "High Complexity Function",
+      "location": "cli/unified_skill_builder.py:147",
+      "severity": "medium",
+      "description": "Function '_format_merged_apis' has complexity 15 (>10 threshold)",
+      "recommendation": "Break into smaller functions or extract complex logic"
+    },
+    {
+      "type": "High Complexity Function",
+      "location": "cli/unified_skill_builder.py:286",
+      "severity": "medium",
+      "description": "Function '_generate_github_references' has complexity 11 (>10 threshold)",
+      "recommendation": "Break into smaller functions or extract complex logic"
+    },
+    {
+      "type": "High Complexity Function",
+      "location": "cli/unified_skill_builder.py:362",
+      "severity": "medium",
+      "description": "Function '_generate_conflicts_report' has complexity 15 (>10 threshold)",
+      "recommendation": "Break into smaller functions or extract complex logic"
+    },
+    {
+      "type": "High Complexity Function",
+      "location": "cli/upload_skill.py:39",
+      "severity": "medium",
+      "description": "Function 'upload_skill_api' has complexity 11 (>10 threshold)",
+      "recommendation": "Break into smaller functions or extract complex logic"
+    },
+    {
+      "type": "High Complexity Function",
+      "location": "cli/code_analyzer.py:158",
+      "severity": "medium",
+      "description": "Function '_extract_python_function' has complexity 13 (>10 threshold)",
+      "recommendation": "Break into smaller functions or extract complex logic"
+    },
+    {
+      "type": "Bare Exception Handler",
+      "location": "cli/code_analyzer.py",
+      "severity": "medium",
+      "description": "Found 3 bare except handlers",
+      "recommendation": "Specify exception types for better error handling"
+    }
+  ],
+  "refactoring_recommendations": [
+    {
+      "recommendation": "Break down complex function",
+      "file": "cli/unified_skill_builder.py:72",
+      "priority": "medium",
+      "estimated_effort_hours": 4,
+      "expected_impact": "Reduces complexity, improves readability"
+    },
+    {
+      "recommendation": "Break down complex function",
+      "file": "cli/unified_skill_builder.py:147",
+      "priority": "medium",
+      "estimated_effort_hours": 4,
+      "expected_impact": "Reduces complexity, improves readability"
+    },
+    {
+      "recommendation": "Break down complex function",
+      "file": "cli/unified_skill_builder.py:286",
+      "priority": "medium",
+      "estimated_effort_hours": 4,
+      "expected_impact": "Reduces complexity, improves readability"
+    },
+    {
+      "recommendation": "Break down complex function",
+      "file": "cli/unified_skill_builder.py:362",
+      "priority": "medium",
+      "estimated_effort_hours": 4,
+      "expected_impact": "Reduces complexity, improves readability"
+    },
+    {
+      "recommendation": "Break down complex function",
+      "file": "cli/upload_skill.py:39",
+      "priority": "medium",
+      "estimated_effort_hours": 4,
+      "expected_impact": "Reduces complexity, improves readability"
+    },
+    {
+      "recommendation": "Break down complex function",
+      "file": "cli/code_analyzer.py:158",
+      "priority": "medium",
+      "estimated_effort_hours": 4,
+      "expected_impact": "Reduces complexity, improves readability"
+    },
+    {
+      "recommendation": "Add specific exception types",
+      "file": "cli/code_analyzer.py",
+      "priority": "medium",
+      "estimated_effort_hours": 2,
+      "expected_impact": "Better error handling and debugging"
+    }
+  ]
+}

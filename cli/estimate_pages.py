@@ -141,6 +141,10 @@ def estimate_pages(config, max_discovery=DEFAULT_MAX_DISCOVERY, timeout=30):
 
 def is_valid_url(url, base_url, include_patterns, exclude_patterns):
     """Check if URL should be crawled"""
+    # URL scheme validation for security
+    if not is_scheme_safe(url, base_url):
+        return False
+
     # Must be same domain
     if not url.startswith(base_url.rstrip('/')):
         return False
@@ -160,6 +164,37 @@ def is_valid_url(url, base_url, include_patterns, exclude_patterns):
 
     # If no include patterns, accept by default
     return True
+
+
+def is_scheme_safe(url, base_url):
+    """Check if URL scheme is safe for crawling.
+    
+    Args:
+        url (str): URL to check
+        base_url (str): Base URL to compare scheme against
+        
+    Returns:
+        bool: True if scheme is safe, False otherwise
+    """
+    # Allow relative URLs (no scheme) - check if :// is NOT in URL
+    if not url or '://' not in url:
+        return True
+        
+    try:
+        parsed = urlparse(url)
+        scheme = parsed.scheme.lower()
+        
+        # Only allow http and https schemes
+        if scheme not in ['http', 'https']:
+            return False
+            
+        # Scheme must match base_url scheme
+        base_scheme = urlparse(base_url).scheme.lower()
+        return scheme == base_scheme
+        
+    except Exception:
+        # If parsing fails, reject URL
+        return False
 
 
 def print_results(results, config):

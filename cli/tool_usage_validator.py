@@ -925,7 +925,7 @@ Read: output/dependency_analysis.md
 """
 
         elif agent_type == "referee-agent-csp":
-            tool_instructions += f"""
+            tool_instructions += """
 ### Referee-Specific Requirements:
 1. **Read All Candidates**: MUST read ALL candidate files using Read tool
 2. **Objective Validation**: MUST use Bash tool to execute validation commands (no theoretical analysis)
@@ -960,7 +960,7 @@ Write: file_path="synthesis_results.json" content=json_dumps(results)
 
         else:
             # Standard instructions for other agents
-            tool_instructions += f"""
+            tool_instructions += """
 ### Tool Usage Rules:
 1. **ACTUALLY EXECUTE** the tools using appropriate commands
 2. **CAPTURE OUTPUT** from each tool execution

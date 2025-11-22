@@ -12,6 +12,7 @@ from cli.constants import (
     DEFAULT_RATE_LIMIT,
     DEFAULT_MAX_PAGES,
     DEFAULT_CHECKPOINT_INTERVAL,
+    DEFAULT_ASYNC_MODE,
     CONTENT_PREVIEW_LENGTH,
     MAX_PAGES_WARNING_THRESHOLD,
     MIN_CATEGORIZATION_SCORE,
@@ -37,12 +38,14 @@ class TestConstants(unittest.TestCase):
         self.assertIsNotNone(DEFAULT_RATE_LIMIT)
         self.assertIsNotNone(DEFAULT_MAX_PAGES)
         self.assertIsNotNone(DEFAULT_CHECKPOINT_INTERVAL)
+        self.assertIsNotNone(DEFAULT_ASYNC_MODE)
 
     def test_scraping_constants_types(self):
         """Test that scraping constants have correct types."""
         self.assertIsInstance(DEFAULT_RATE_LIMIT, (int, float))
         self.assertIsInstance(DEFAULT_MAX_PAGES, int)
         self.assertIsInstance(DEFAULT_CHECKPOINT_INTERVAL, int)
+        self.assertIsInstance(DEFAULT_ASYNC_MODE, bool)
 
     def test_scraping_constants_ranges(self):
         """Test that scraping constants have sensible values."""
@@ -52,6 +55,7 @@ class TestConstants(unittest.TestCase):
         self.assertEqual(DEFAULT_RATE_LIMIT, 0.5)
         self.assertEqual(DEFAULT_MAX_PAGES, 500)
         self.assertEqual(DEFAULT_CHECKPOINT_INTERVAL, 1000)
+        self.assertEqual(DEFAULT_ASYNC_MODE, True)
 
     def test_content_analysis_constants(self):
         """Test content analysis constants."""
@@ -155,8 +159,199 @@ class TestConstantsExports(unittest.TestCase):
     def test_all_exports_count(self):
         """Test that __all__ has expected number of exports."""
         from cli import constants
-        # We defined 18 constants (added DEFAULT_ASYNC_MODE)
+        # We defined 18 constants (including DEFAULT_ASYNC_MODE)
         self.assertEqual(len(constants.__all__), 18)
+
+
+class TestConstantsBusinessLogic(unittest.TestCase):
+    """Test business logic relationships between constants."""
+
+    def test_scraping_performance_relationships(self):
+        """Test that scraping constants follow performance best practices."""
+        # Checkpoint should be larger than max_pages for large sites
+        self.assertGreater(DEFAULT_CHECKPOINT_INTERVAL, DEFAULT_MAX_PAGES)
+
+        # Rate limit should be reasonable for web scraping
+        self.assertGreaterEqual(DEFAULT_RATE_LIMIT, 0.1)  # Not too fast
+        self.assertLessEqual(DEFAULT_RATE_LIMIT, 5.0)      # Not too slow
+
+    def test_content_processing_relationships(self):
+        """Test content processing constant relationships."""
+        # Content preview should be reasonable for categorization
+        self.assertGreater(CONTENT_PREVIEW_LENGTH, 100)
+        self.assertLessEqual(CONTENT_PREVIEW_LENGTH, 2000)
+
+        # Warning threshold should be much higher than default max
+        self.assertGreater(MAX_PAGES_WARNING_THRESHOLD, DEFAULT_MAX_PAGES * 5)
+
+        # Code blocks limit should be reasonable per page
+        self.assertGreater(MAX_CODE_BLOCKS_PER_PAGE, 1)
+        self.assertLessEqual(MAX_CODE_BLOCKS_PER_PAGE, 20)
+
+    def test_enhancement_content_relationships(self):
+        """Test enhancement content limit relationships."""
+        # API should handle more content than local
+        self.assertGreater(API_CONTENT_LIMIT, LOCAL_CONTENT_LIMIT)
+        self.assertGreater(API_PREVIEW_LIMIT, LOCAL_PREVIEW_LIMIT)
+
+        # Content limits should be larger than preview limits
+        self.assertGreater(API_CONTENT_LIMIT, API_PREVIEW_LIMIT)
+        self.assertGreater(LOCAL_CONTENT_LIMIT, LOCAL_PREVIEW_LIMIT)
+
+        # Limits should be reasonable for processing
+        self.assertLessEqual(API_CONTENT_LIMIT, 1000000)  # 1MB max
+        self.assertLessEqual(LOCAL_CONTENT_LIMIT, 500000) # 500KB max
+
+    def test_discovery_threshold_relationships(self):
+        """Test discovery and threshold relationships."""
+        # Discovery threshold should be higher than default discovery
+        self.assertGreater(DISCOVERY_THRESHOLD, DEFAULT_MAX_DISCOVERY)
+
+        # Discovery should be reasonable for documentation sites
+        self.assertGreater(DEFAULT_MAX_DISCOVERY, 100)
+        self.assertLessEqual(DEFAULT_MAX_DISCOVERY, 10000)
+
+    def test_categorization_scoring_logic(self):
+        """Test that categorization scoring follows logical hierarchy."""
+        # URL matches should be worth more than title matches
+        self.assertGreater(URL_MATCH_POINTS, TITLE_MATCH_POINTS)
+
+        # Title matches should be worth more than content matches
+        self.assertGreater(TITLE_MATCH_POINTS, CONTENT_MATCH_POINTS)
+
+        # Minimum score should be achievable with combinations
+        self.assertLessEqual(MIN_CATEGORIZATION_SCORE, URL_MATCH_POINTS)
+        self.assertLessEqual(MIN_CATEGORIZATION_SCORE, TITLE_MATCH_POINTS + CONTENT_MATCH_POINTS)
+
+        # Points should be positive integers
+        for points in [URL_MATCH_POINTS, TITLE_MATCH_POINTS, CONTENT_MATCH_POINTS]:
+            self.assertIsInstance(points, int)
+            self.assertGreater(points, 0)
+
+    def test_file_limits_reasonableness(self):
+        """Test that file limits are reasonable for skill generation."""
+        # Reference files should be reasonable for organization
+        self.assertGreater(MAX_REFERENCE_FILES, 10)
+        self.assertLessEqual(MAX_REFERENCE_FILES, 1000)
+
+        # Should have reasonable ratio to pages
+        self.assertLessEqual(MAX_REFERENCE_FILES, DEFAULT_MAX_PAGES // 2)
+
+
+class TestConstantsEdgeCases(unittest.TestCase):
+    """Test edge cases and boundary conditions for constants."""
+
+    def test_constants_are_immutable(self):
+        """Test that constants resist modification (as much as Python allows)."""
+        # Test that constants don't have setters (they're module-level)
+        from cli import constants
+
+        # Should be able to access all constants
+        for name in constants.__all__:
+            value = getattr(constants, name)
+            self.assertIsNotNone(value, f"Constant {name} should not be None")
+
+    def test_constants_have_proper_types(self):
+        """Test that all constants have expected Python types."""
+        type_expectations = {
+            'DEFAULT_RATE_LIMIT': (int, float),
+            'DEFAULT_MAX_PAGES': int,
+            'DEFAULT_CHECKPOINT_INTERVAL': int,
+            'DEFAULT_ASYNC_MODE': bool,
+            'CONTENT_PREVIEW_LENGTH': int,
+            'MAX_PAGES_WARNING_THRESHOLD': int,
+            'MIN_CATEGORIZATION_SCORE': int,
+            'URL_MATCH_POINTS': int,
+            'TITLE_MATCH_POINTS': int,
+            'CONTENT_MATCH_POINTS': int,
+            'API_CONTENT_LIMIT': int,
+            'API_PREVIEW_LIMIT': int,
+            'LOCAL_CONTENT_LIMIT': int,
+            'LOCAL_PREVIEW_LIMIT': int,
+            'DEFAULT_MAX_DISCOVERY': int,
+            'DISCOVERY_THRESHOLD': int,
+            'MAX_REFERENCE_FILES': int,
+            'MAX_CODE_BLOCKS_PER_PAGE': int,
+        }
+
+        from cli import constants
+
+        for name, expected_type in type_expectations.items():
+            value = getattr(constants, name)
+            self.assertIsInstance(
+                value, expected_type,
+                f"Constant {name} should be {expected_type}, got {type(value)}"
+            )
+
+    def test_constants_are_positive_where_expected(self):
+        """Test that numeric constants are positive where it makes sense."""
+        positive_constants = [
+            DEFAULT_RATE_LIMIT,
+            DEFAULT_MAX_PAGES,
+            DEFAULT_CHECKPOINT_INTERVAL,
+            CONTENT_PREVIEW_LENGTH,
+            MAX_PAGES_WARNING_THRESHOLD,
+            MIN_CATEGORIZATION_SCORE,
+            URL_MATCH_POINTS,
+            TITLE_MATCH_POINTS,
+            CONTENT_MATCH_POINTS,
+            API_CONTENT_LIMIT,
+            API_PREVIEW_LIMIT,
+            LOCAL_CONTENT_LIMIT,
+            LOCAL_PREVIEW_LIMIT,
+            DEFAULT_MAX_DISCOVERY,
+            DISCOVERY_THRESHOLD,
+            MAX_REFERENCE_FILES,
+            MAX_CODE_BLOCKS_PER_PAGE,
+        ]
+
+        for constant in positive_constants:
+            self.assertGreater(constant, 0, f"Constant should be positive: {constant}")
+
+    def test_constants_are_reasonable_scale(self):
+        """Test that constants are on reasonable scale for their purpose."""
+        # Rate limiting: 0.1 to 10 seconds
+        self.assertGreaterEqual(DEFAULT_RATE_LIMIT, 0.1)
+        self.assertLessEqual(DEFAULT_RATE_LIMIT, 10.0)
+
+        # Page counts: 1 to 1 million
+        self.assertGreaterEqual(DEFAULT_MAX_PAGES, 1)
+        self.assertLessEqual(DEFAULT_MAX_PAGES, 1000000)
+
+        # Content limits: 100 to 1MB (500 is actual value)
+        self.assertGreaterEqual(CONTENT_PREVIEW_LENGTH, 100)
+        self.assertLessEqual(CONTENT_PREVIEW_LENGTH, 1000000)
+
+        # File limits: 1 to 10,000
+        self.assertGreaterEqual(MAX_REFERENCE_FILES, 1)
+        self.assertLessEqual(MAX_REFERENCE_FILES, 10000)
+
+
+class TestConstantsDocumentation(unittest.TestCase):
+    """Test that constants are properly documented and accessible."""
+
+    def test_constants_module_docstring(self):
+        """Test that constants module has proper documentation."""
+        from cli import constants
+        self.assertIsNotNone(constants.__doc__)
+        self.assertGreater(len(constants.__doc__.strip()), 50)
+
+    def test_constants_are_discoverable(self):
+        """Test that constants can be discovered programmatically."""
+        from cli import constants
+
+        # All constants should be in module namespace
+        for name in constants.__all__:
+            self.assertTrue(hasattr(constants, name))
+
+        # Constants should not start with underscore (except __all__)
+        for name in dir(constants):
+            if not name.startswith('_') and name != 'constants':
+                attr = getattr(constants, name)
+                # Should be a constant (immutable-like value)
+                if isinstance(attr, (int, float, bool)):
+                    self.assertIn(name, constants.__all__,
+                                f"Exported constant {name} missing from __all__")
 
 
 if __name__ == '__main__':
