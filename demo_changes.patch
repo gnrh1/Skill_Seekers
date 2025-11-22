@@ -1,0 +1,49 @@
+--- a/tool_demo_sample.py
++++ b/tool_demo_sample.py
+@@ -7,6 +7,8 @@ import os
+ import sys
+ import json
++from pathlib import Path
++from datetime import datetime
+ from typing import Dict, List, Optional
+ 
+ 
+@@ -32,6 +34,11 @@ class ToolDemo:
+         self.created_at = "2025-11-21T10:53:00Z"
+         self.modified_count = 0
+ 
++    def track_modification(self) -> None:
++        """Track file modification attempts."""
++        self.modified_count += 1
++        print(f"File modified {self.modified_count} time(s)")
++
+     def add_feature(self, feature: str) -> None:
+         """
+         Add a feature to the demo.
+@@ -39,6 +46,7 @@ class ToolDemo:
+         Args:
+             feature: Feature description to add
+         """
++        self.track_modification()
+         self.features.append(feature)
+         print(f"Added feature: {feature}")
+ 
+--- a/tool_demo_config.py
++++ b/tool_demo_config.py
+@@ -1,6 +1,8 @@
+ """
+ Configuration module for ToolDemo demonstrations.
++Enhanced with logging and validation capabilities.
++Last updated: 2025-11-21
+ Supports loading and managing demo configurations.
+ """
+ 
+@@ -15,6 +17,9 @@ class ToolDemoConfig:
+         "debug_mode": False
+     }
+     
+     def __init__(self, config_path: Optional[str] = None):
++        """Initialize with enhanced error handling."""
++        print("Initializing ToolDemoConfig with enhanced features...")
++        super().__init__()
+         """

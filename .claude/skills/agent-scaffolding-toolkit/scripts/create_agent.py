@@ -133,13 +133,6 @@ def generate_agent_file(template_name: str, config: Dict) -> str:
     for tool in sorted(config['tools']):
         yaml_content.append(f"  - {tool}")
 
-    if config['tags']:
-        yaml_content.extend([
-            "tags:",
-        ])
-        for tag in sorted(config['tags']):
-            yaml_content.append(f"  - {tag}")
-
     yaml_content.append("---")
 
     # System prompt

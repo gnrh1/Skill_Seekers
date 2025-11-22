@@ -10,7 +10,7 @@ across the CLI tools to improve maintainability and clarity.
 DEFAULT_RATE_LIMIT = 0.5  # seconds between requests
 DEFAULT_MAX_PAGES = 500   # maximum pages to scrape
 DEFAULT_CHECKPOINT_INTERVAL = 1000  # pages between checkpoints
-DEFAULT_ASYNC_MODE = False  # use async mode for parallel scraping (opt-in)
+DEFAULT_ASYNC_MODE = True  # use async mode for parallel scraping (default, use --sync for opt-out)
 
 # Content analysis limits
 CONTENT_PREVIEW_LENGTH = 500  # characters to check for categorization

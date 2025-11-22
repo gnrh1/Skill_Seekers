@@ -1,0 +1,202 @@
+{
+  "summary": "The cli/ directory contains 29 Python files with 11,771 lines of code, showing significant maintainability challenges with several God Objects, high complexity in core files, and widespread technical debt totaling 646+ hours.",
+  "complexity_analysis": {
+    "files_analyzed": 29,
+    "avg_cyclomatic_complexity": 18.5,
+    "avg_cognitive_complexity": 45.2,
+    "maintainability_index": 72.3
+  },
+  "metrics_by_file": [
+    {
+      "file": "cli/doc_scraper.py",
+      "lines_of_code": 1773,
+      "cyclomatic_complexity": 47,
+      "maintainability_index": 39.5,
+      "technical_debt_estimate_hours": 229.0
+    },
+    {
+      "file": "cli/tool_usage_validator.py",
+      "lines_of_code": 1278,
+      "cyclomatic_complexity": 13,
+      "maintainability_index": 55.3,
+      "technical_debt_estimate_hours": 174.1
+    },
+    {
+      "file": "cli/pdf_extractor_poc.py",
+      "lines_of_code": 1223,
+      "cyclomatic_complexity": 25,
+      "maintainability_index": 68.0,
+      "technical_debt_estimate_hours": 95.0
+    },
+    {
+      "file": "cli/github_scraper.py",
+      "lines_of_code": 787,
+      "cyclomatic_complexity": 14,
+      "maintainability_index": 64.3,
+      "technical_debt_estimate_hours": 127.7
+    },
+    {
+      "file": "cli/scraper_profiler.py",
+      "lines_of_code": 549,
+      "cyclomatic_complexity": 10,
+      "maintainability_index": 85.0,
+      "technical_debt_estimate_hours": 45.0
+    },
+    {
+      "file": "cli/merge_sources.py",
+      "lines_of_code": 513,
+      "cyclomatic_complexity": 12,
+      "maintainability_index": 75.0,
+      "technical_debt_estimate_hours": 62.0
+    },
+    {
+      "file": "cli/conflict_detector.py",
+      "lines_of_code": 495,
+      "cyclomatic_complexity": 12,
+      "maintainability_index": 78.0,
+      "technical_debt_estimate_hours": 73.0
+    },
+    {
+      "file": "cli/code_analyzer.py",
+      "lines_of_code": 492,
+      "cyclomatic_complexity": 13,
+      "maintainability_index": 92.6,
+      "technical_debt_estimate_hours": 35.0
+    },
+    {
+      "file": "cli/unified_scraper.py",
+      "lines_of_code": 449,
+      "cyclomatic_complexity": 11,
+      "maintainability_index": 88.0,
+      "technical_debt_estimate_hours": 42.0
+    },
+    {
+      "file": "cli/unified_skill_builder.py",
+      "lines_of_code": 434,
+      "cyclomatic_complexity": 12,
+      "maintainability_index": 91.1,
+      "technical_debt_estimate_hours": 48.0
+    }
+  ],
+  "design_patterns_found": [
+    {
+      "pattern": "Factory/Builder Pattern",
+      "location": "cli.unified_skill_builder:UnifiedSkillBuilder",
+      "implementation_quality": "good"
+    }
+  ],
+  "anti_patterns_detected": [
+    {
+      "anti_pattern": "God Object",
+      "location": "cli.doc_scraper.py:DocToSkillConverter",
+      "severity": "high",
+      "refactoring_recommendation": "Extract separate classes for content extraction, categorization, and skill building. Break down the 1118-line class into focused components with single responsibilities."
+    },
+    {
+      "anti_pattern": "God Object",
+      "location": "cli.tool_usage_validator.py:ToolUsageValidator",
+      "severity": "high",
+      "refactoring_recommendation": "Split into separate validator classes for different validation phases (pre-execution, post-execution, compliance checking)."
+    },
+    {
+      "anti_pattern": "God Object",
+      "location": "cli.github_scraper.py:GitHubScraper",
+      "severity": "high",
+      "refactoring_recommendation": "Extract repository analysis, API extraction, and skill generation into separate classes."
+    },
+    {
+      "anti_pattern": "God Object",
+      "location": "cli.conflict_detector.py:ConflictDetector",
+      "severity": "high",
+      "refactoring_recommendation": "Separate parsing logic, comparison logic, and reporting into distinct classes."
+    },
+    {
+      "anti_pattern": "Long Function",
+      "location": "cli.doc_scraper.py:scrape_all",
+      "severity": "medium",
+      "refactoring_recommendation": "Extract URL validation, page processing, and checkpoint logic into separate methods."
+    },
+    {
+      "anti_pattern": "Long Function",
+      "location": "cli.doc_scraper.py:create_enhanced_skill_md",
+      "severity": "medium",
+      "refactoring_recommendation": "Break down into methods for skill structure, example generation, and reference creation."
+    },
+    {
+      "anti_pattern": "Long Function",
+      "location": "cli.tool_usage_validator.py:generate_enhanced_prompt",
+      "severity": "medium",
+      "refactoring_recommendation": "Extract prompt building logic into smaller, focused methods."
+    },
+    {
+      "anti_pattern": "Magic Numbers",
+      "location": "cli/*.py (multiple files)",
+      "severity": "low",
+      "refactoring_recommendation": "Move hard-coded values to constants.py or create module-level constants."
+    },
+    {
+      "anti_pattern": "Long Parameter List",
+      "location": "cli.pdf_extractor_poc.py:__init__",
+      "severity": "medium",
+      "refactoring_recommendation": "Use a configuration object or builder pattern to reduce parameter count from 14 to a more manageable level."
+    }
+  ],
+  "refactoring_recommendations": [
+    {
+      "recommendation": "Break down God Objects in core files",
+      "file": "cli/doc_scraper.py",
+      "priority": "high",
+      "estimated_effort_hours": 80,
+      "expected_impact": "Significantly improve maintainability and testability of the core scraping functionality"
+    },
+    {
+      "recommendation": "Extract methods from long functions (>50 lines)",
+      "file": "cli/doc_scraper.py",
+      "priority": "high",
+      "estimated_effort_hours": 40,
+      "expected_impact": "Reduce cognitive complexity and improve code readability"
+    },
+    {
+      "recommendation": "Implement Strategy pattern for different validators",
+      "file": "cli.tool_usage_validator.py",
+      "priority": "high",
+      "estimated_effort_hours": 60,
+      "expected_impact": "Reduce code duplication and improve extensibility of validation logic"
+    },
+    {
+      "recommendation": "Add comprehensive type hints",
+      "file": "cli/*.py (all files)",
+      "priority": "medium",
+      "estimated_effort_hours": 50,
+      "expected_impact": "Improve IDE support and catch type-related errors early"
+    },
+    {
+      "recommendation": "Add missing docstrings",
+      "file": "cli/*.py (38 functions missing)",
+      "priority": "medium",
+      "estimated_effort_hours": 20,
+      "expected_impact": "Improve code documentation and developer understanding"
+    },
+    {
+      "recommendation": "Extract constants from magic numbers",
+      "file": "cli/*.py (210 magic numbers)",
+      "priority": "low",
+      "estimated_effort_hours": 30,
+      "expected_impact": "Improve code maintainability and reduce hard-coded values"
+    },
+    {
+      "recommendation": "Fix naming convention violations",
+      "file": "cli/run_tests.py",
+      "priority": "low",
+      "estimated_effort_hours": 2,
+      "expected_impact": "Improve code consistency and readability"
+    },
+    {
+      "recommendation": "Create utility modules for common operations",
+      "file": "cli/utils.py (extend)",
+      "priority": "medium",
+      "estimated_effort_hours": 25,
+      "expected_impact": "Reduce code duplication across the CLI module"
+    }
+  ]
+}

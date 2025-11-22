@@ -1,0 +1,249 @@
+{
+  "droid": "code-analyzer",
+  "timestamp": "2025-11-21T16:28:50.464806",
+  "summary": "Analyzed 28 files with 11733 total lines. Avg complexity 8.57, maintainability index 45.41/100. Found 4 issues.",
+  "complexity_analysis": {
+    "files_analyzed": 28,
+    "total_lines": 11733,
+    "avg_cyclomatic_complexity": 8.57,
+    "maintainability_index": 45.41
+  },
+  "metrics_by_file": [
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/github_scraper.py",
+      "lines_of_code": 786,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 88.14,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/package_skill.py",
+      "lines_of_code": 177,
+      "cyclomatic_complexity": 5,
+      "maintainability_index": 88.23,
+      "technical_debt_estimate_hours": 2.5
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/tool_usage_validator.py",
+      "lines_of_code": 1278,
+      "cyclomatic_complexity": 4,
+      "maintainability_index": 79.22,
+      "technical_debt_estimate_hours": 2.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/run_tests.py",
+      "lines_of_code": 228,
+      "cyclomatic_complexity": 10,
+      "maintainability_index": 77.72,
+      "technical_debt_estimate_hours": 5.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/llms_txt_detector.py",
+      "lines_of_code": 66,
+      "cyclomatic_complexity": 0,
+      "maintainability_index": 99.34,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/pdf_scraper.py",
+      "lines_of_code": 389,
+      "cyclomatic_complexity": 4,
+      "maintainability_index": 88.11,
+      "technical_debt_estimate_hours": 2.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/unified_skill_builder.py",
+      "lines_of_code": 433,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 91.67,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/config_validator.py",
+      "lines_of_code": 367,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 92.33,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/upload_skill.py",
+      "lines_of_code": 174,
+      "cyclomatic_complexity": 4,
+      "maintainability_index": 90.26,
+      "technical_debt_estimate_hours": 2.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/constants.py",
+      "lines_of_code": 72,
+      "cyclomatic_complexity": 0,
+      "maintainability_index": 99.28,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/llms_txt_downloader.py",
+      "lines_of_code": 94,
+      "cyclomatic_complexity": 0,
+      "maintainability_index": 99.06,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/llms_txt_parser.py",
+      "lines_of_code": 74,
+      "cyclomatic_complexity": 0,
+      "maintainability_index": 99.26,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/estimate_pages.py",
+      "lines_of_code": 288,
+      "cyclomatic_complexity": 8,
+      "maintainability_index": 81.12,
+      "technical_debt_estimate_hours": 4.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/package_multi.py",
+      "lines_of_code": 81,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 95.19,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/enhance_skill_local.py",
+      "lines_of_code": 232,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 93.68,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/unified_scraper.py",
+      "lines_of_code": 449,
+      "cyclomatic_complexity": 1,
+      "maintainability_index": 93.51,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/conflict_detector.py",
+      "lines_of_code": 495,
+      "cyclomatic_complexity": 4,
+      "maintainability_index": 87.05,
+      "technical_debt_estimate_hours": 2.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/merge_sources.py",
+      "lines_of_code": 513,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 90.87,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/doc_scraper.py",
+      "lines_of_code": 1772,
+      "cyclomatic_complexity": 29,
+      "maintainability_index": 24.28,
+      "technical_debt_estimate_hours": 14.5
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/utils.py",
+      "lines_of_code": 224,
+      "cyclomatic_complexity": 10,
+      "maintainability_index": 77.76,
+      "technical_debt_estimate_hours": 5.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/split_config.py",
+      "lines_of_code": 320,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 92.8,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/code_analyzer.py",
+      "lines_of_code": 491,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 91.09,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/generate_router.py",
+      "lines_of_code": 274,
+      "cyclomatic_complexity": 4,
+      "maintainability_index": 89.26,
+      "technical_debt_estimate_hours": 2.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/enhance_skill.py",
+      "lines_of_code": 273,
+      "cyclomatic_complexity": 4,
+      "maintainability_index": 89.27,
+      "technical_debt_estimate_hours": 2.0
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/index_codebase.py",
+      "lines_of_code": 220,
+      "cyclomatic_complexity": 7,
+      "maintainability_index": 83.8,
+      "technical_debt_estimate_hours": 3.5
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/scraper_profiler.py",
+      "lines_of_code": 549,
+      "cyclomatic_complexity": 2,
+      "maintainability_index": 90.51,
+      "technical_debt_estimate_hours": 1
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/test_unified_simple.py",
+      "lines_of_code": 192,
+      "cyclomatic_complexity": 3,
+      "maintainability_index": 92.08,
+      "technical_debt_estimate_hours": 1.5
+    },
+    {
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/pdf_extractor_poc.py",
+      "lines_of_code": 1222,
+      "cyclomatic_complexity": 5,
+      "maintainability_index": 77.78,
+      "technical_debt_estimate_hours": 2.5
+    }
+  ],
+  "design_patterns_found": [],
+  "anti_patterns_detected": [
+    {
+      "type": "Large File",
+      "location": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/tool_usage_validator.py",
+      "severity": "medium",
+      "description": "File has 1278 lines (>1000 threshold)",
+      "recommendation": "Consider splitting into smaller, focused modules"
+    },
+    {
+      "type": "Large File",
+      "location": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/doc_scraper.py",
+      "severity": "medium",
+      "description": "File has 1772 lines (>1000 threshold)",
+      "recommendation": "Consider splitting into smaller, focused modules"
+    },
+    {
+      "type": "Bare Exception Handler",
+      "location": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/code_analyzer.py",
+      "severity": "medium",
+      "description": "Found bare except handlers",
+      "recommendation": "Specify exception types for better error handling"
+    },
+    {
+      "type": "Large File",
+      "location": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/pdf_extractor_poc.py",
+      "severity": "medium",
+      "description": "File has 1222 lines (>1000 threshold)",
+      "recommendation": "Consider splitting into smaller, focused modules"
+    }
+  ],
+  "refactoring_recommendations": [
+    {
+      "recommendation": "Add specific exception types",
+      "file": "/Users/docravikumar/Code/skill-test/Skill_Seekers/cli/code_analyzer.py",
+      "priority": "medium",
+      "estimated_effort_hours": 2,
+      "expected_impact": "Better error handling and debugging"
+    }
+  ]
+}

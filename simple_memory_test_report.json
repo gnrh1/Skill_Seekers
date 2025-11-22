@@ -1,0 +1,72 @@
+{
+  "summary": {
+    "duration_seconds": 0.168198823928833,
+    "total_tests": 8,
+    "successful": 8,
+    "failed": 0,
+    "success_rate": 1.0
+  },
+  "memory": {
+    "initial_mb": 15.31640625,
+    "final_mb": 213.81640625,
+    "peak_mb": 213.8125
+  },
+  "results": [
+    {
+      "test": "allocation_1MB",
+      "success": true,
+      "memory_mb": 16.33984375,
+      "time_seconds": 0.0005218982696533203,
+      "error": null
+    },
+    {
+      "test": "allocation_5MB",
+      "success": true,
+      "memory_mb": 21.34375,
+      "time_seconds": 0.0026481151580810547,
+      "error": null
+    },
+    {
+      "test": "allocation_10MB",
+      "success": true,
+      "memory_mb": 31.34765625,
+      "time_seconds": 0.005201816558837891,
+      "error": null
+    },
+    {
+      "test": "allocation_25MB",
+      "success": true,
+      "memory_mb": 56.3515625,
+      "time_seconds": 0.013377904891967773,
+      "error": null
+    },
+    {
+      "test": "allocation_50MB",
+      "success": true,
+      "memory_mb": 106.35546875,
+      "time_seconds": 0.027253150939941406,
+      "error": null
+    },
+    {
+      "test": "allocation_100MB",
+      "success": true,
+      "memory_mb": 206.359375,
+      "time_seconds": 0.0565798282623291,
+      "error": null
+    },
+    {
+      "test": "memory_thrashing",
+      "success": true,
+      "memory_mb": 206.359375,
+      "time_seconds": 0.006997823715209961,
+      "error": null
+    },
+    {
+      "test": "concurrent_allocations",
+      "success": true,
+      "memory_mb": 213.8125,
+      "time_seconds": 0.029764175415039062,
+      "error": null
+    }
+  ]
+}

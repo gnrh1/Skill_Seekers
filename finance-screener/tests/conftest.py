@@ -204,21 +204,40 @@ def duckdb_conn(test_data_dir: Path) -> Generator[duckdb.DuckDBPyConnection, Non
         CREATE TABLE IF NOT EXISTS error_log (
             id INTEGER PRIMARY KEY DEFAULT nextval('error_log_id_seq'),
             timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            component VARCHAR,
-            error VARCHAR,
+            error_type VARCHAR,
+            error_message VARCHAR,
             context JSON
         )
     """)
     
     conn.execute("""
+        CREATE SEQUENCE IF NOT EXISTS api_costs_id_seq
+    """)
+    
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS api_costs (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY DEFAULT nextval('api_costs_id_seq'),
+            api_name VARCHAR NOT NULL,
+            endpoint VARCHAR,
             timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            service VARCHAR,
-            operation VARCHAR,
-            tokens_used INTEGER,
-            cost_usd DECIMAL(10, 6),
-            ticker VARCHAR
+            tokens INTEGER,
+            cost_usd FLOAT
+        )
+    """)
+    
+    conn.execute("""
+        CREATE SEQUENCE IF NOT EXISTS pipeline_executions_id_seq
+    """)
+    
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS pipeline_executions (
+            id INTEGER PRIMARY KEY DEFAULT nextval('pipeline_executions_id_seq'),
+            pipeline_name VARCHAR NOT NULL,
+            status VARCHAR NOT NULL,
+            start_time TIMESTAMP,
+            end_time TIMESTAMP,
+            duration_ms FLOAT,
+            metadata JSON
         )
     """)
     
@@ -288,6 +307,49 @@ def mock_sec_response(sample_sec_filing_html: str) -> Mock:
     mock.status_code = 200
     mock.text = sample_sec_filing_html
     mock.headers = {"Content-Type": "text/html"}
+    return mock
+
+
+@pytest.fixture
+def mock_gemini_response() -> Mock:
+    """
+    Mock Gemini Vision API response for table extraction.
+    """
+    mock = Mock()
+    mock.text = """
+    ```json
+    {
+        "tables": [
+            {
+                "table_index": 0,
+                "caption": "Revenue and Income",
+                "data": {
+                    "headers": ["Year", "Revenue", "Net Income"],
+                    "rows": [
+                        ["2020", "$31.5B", "$721M"],
+                        ["2021", "$53.8B", "$5.5B"]
+                    ]
+                }
+            }
+        ]
+    }
+    ```
+    """
+    return mock
+
+
+@pytest.fixture
+def mock_claude_response() -> Mock:
+    """
+    Mock Claude API response for query processing.
+    """
+    mock = Mock()
+    mock.content = [
+        {
+            "type": "text",
+            "text": "Based on the filing, Tesla's revenue in 2020 was $31.5 billion, representing a 28% increase from the previous year. This growth was driven by increased vehicle deliveries and expansion into new markets."
+        }
+    ]
     return mock
 
 

@@ -17,12 +17,14 @@ jsonschema-specifications==2025.9.1
 mcp==1.18.0
 packaging==25.0
 pluggy==1.6.0
+psutil==7.0.0
 pydantic==2.12.3
 pydantic-settings==2.11.0
 pydantic_core==2.41.4
 PyGithub==2.5.0
 Pygments==2.19.2
 PyMuPDF==1.24.14
+PyYAML==6.0.3
 Pillow==11.0.0
 pytesseract==0.3.13
 pytest==8.4.2

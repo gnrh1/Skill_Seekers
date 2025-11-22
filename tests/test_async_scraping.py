@@ -30,8 +30,8 @@ class TestAsyncConfiguration(unittest.TestCase):
         """Restore original working directory"""
         os.chdir(self.original_cwd)
 
-    def test_async_mode_default_false(self):
-        """Test async mode is disabled by default"""
+    def test_async_mode_default_true(self):
+        """Test async mode is enabled by default"""
         config = {
             'name': 'test',
             'base_url': 'https://example.com/',
@@ -43,6 +43,26 @@ class TestAsyncConfiguration(unittest.TestCase):
             try:
                 os.chdir(tmpdir)
                 converter = DocToSkillConverter(config, dry_run=True)
+                self.assertTrue(converter.async_mode)
+            finally:
+                os.chdir(self.original_cwd)
+
+    def test_sync_flag_overrides_default(self):
+        """Test --sync flag can override default async mode"""
+        config = {
+            'name': 'test',
+            'base_url': 'https://example.com/',
+            'selectors': {'main_content': 'article'},
+            'max_pages': 10
+        }
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            try:
+                os.chdir(tmpdir)
+                # Test with sync flag (simulating CLI override)
+                config['sync_mode'] = True  # This will be set by --sync flag
+                converter = DocToSkillConverter(config, dry_run=True)
+                # When sync_mode is True, async_mode should be False regardless of default
                 self.assertFalse(converter.async_mode)
             finally:
                 os.chdir(self.original_cwd)

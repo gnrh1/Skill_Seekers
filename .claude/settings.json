@@ -13,6 +13,16 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/docravikumar/Code/skill-test/Skill_Seekers/.claude/scripts/memory_protection_hook.py",
+            "description": "Check memory/resource limits before spawning agents with Task tool"
+          }
+        ]
+      },
+      {
         "matcher": "Write|Edit",
         "hooks": [
           {

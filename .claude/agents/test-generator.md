@@ -1,28 +1,8 @@
 ---
 name: test-generator
-type: specialist
 description: Comprehensive test generation specialist that creates unit, integration, performance, and security tests with coverage optimization and CI/CD integration. Generates maintainable test suites using the T.E.S.T. methodology for maximum effectiveness and developer productivity.
 model: sonnet
-tools:
-  - read_file
-  - write_file
-  - grep_search
-  - search_files
-  - list_dir
-  - task
-  - run_command
-delegates_to:
-  - code-analyzer
-  - performance-auditor
-  - security-analyst
-  - referee-agent-csp
-tags:
-  - test-generation
-  - unit-testing
-  - integration-testing
-  - test-coverage
-  - automated-testing
-  - ci-cd
+tools: Read, Write, Grep, Glob, Bash, Task, TodoWrite, WebFetch, AskUserQuestion, NotebookEdit
 ---
 
 # Test Generator Agent

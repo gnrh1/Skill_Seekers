@@ -1,0 +1,60 @@
+{
+  "test_duration": 33.64589715003967,
+  "final_memory_state": {
+    "total_allocated": 202003,
+    "total_blocks": 63,
+    "largest_block": 105141,
+    "snapshot_time": 1763485639.0507112
+  },
+  "test_results": {
+    "deep_nesting": {
+      "structures_created": 10,
+      "max_depth": 1900,
+      "avg_creation_time": 0.04164333343505859,
+      "memory_used": 5274202,
+      "blocks_created": 15
+    },
+    "string_operations": {
+      "operations_completed": 15,
+      "avg_string_size": 6441386.133333334,
+      "avg_operation_time": 2.193950970967611,
+      "memory_used": 20984354,
+      "total_characters_processed": 96620792
+    },
+    "circular_references": {
+      "graphs_created": 1,
+      "total_nodes": 101,
+      "avg_creation_time": 0.04138684272766113,
+      "gc_objects_collected": 0,
+      "gc_time": 0.0014247894287109375,
+      "memory_used": 184565,
+      "leak_detected": true
+    },
+    "rapid_cycles": {
+      "cycles_completed": 0,
+      "avg_allocation_time": 0,
+      "avg_deallocation_time": 0,
+      "memory_variance": 0,
+      "avg_memory_usage": 0,
+      "fragmentation_ratio": 0,
+      "memory_recovered": -4972
+    },
+    "concurrent_access": {
+      "workers": 8,
+      "total_allocations": 0,
+      "total_errors": 0,
+      "error_rate": 0,
+      "avg_worker_time": 5.304813385009766e-06,
+      "memory_used": 24100,
+      "thread_safety_score": 1.0
+    }
+  },
+  "summary": {
+    "total_tests_run": 5,
+    "overall_performance": 0.6546226697310754,
+    "memory_stability_score": -0.0023708343505859375,
+    "recommendations": [
+      "String concatenation performance could be improved"
+    ]
+  }
+}
