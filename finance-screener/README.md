@@ -89,13 +89,13 @@ pytest -v
 
 ## ✅ Test Status
 
-| Component | Tests | Status | Coverage |
-|-----------|-------|--------|----------|
-| Discovery | 8 tests | ✅ Ready | TBD |
-| Ingestion | 0 tests | ⏳ TODO | - |
-| Query | 0 tests | ⏳ TODO | - |
-| Monitoring | 0 tests | ⏳ TODO | - |
-| Integration | 0 tests | ⏳ TODO | - |
+| Component   | Tests   | Status   | Coverage |
+| ----------- | ------- | -------- | -------- |
+| Discovery   | 8 tests | ✅ Ready | TBD      |
+| Ingestion   | 0 tests | ⏳ TODO  | -        |
+| Query       | 0 tests | ⏳ TODO  | -        |
+| Monitoring  | 0 tests | ⏳ TODO  | -        |
+| Integration | 0 tests | ⏳ TODO  | -        |
 
 **Current Status**: Phase 1 complete (discovery tool with TDD)
 
@@ -104,12 +104,14 @@ pytest -v
 ### TDD Cycle (Red → Green → Refactor)
 
 1. **RED**: Write failing test
+
    ```bash
    pytest tests/test_discovery.py::test_discover_valid_ticker_10k -v
    # Expected: FAILED (implementation not complete)
    ```
 
 2. **GREEN**: Implement minimum code to pass
+
    ```python
    # Edit skill_seeker_mcp/finance_tools/discovery.py
    # Run test again
@@ -146,6 +148,7 @@ result = await discover_sec_filing("TSLA", "10-K", 2020)
 ```
 
 **Tests**: `tests/test_discovery.py`
+
 - ✅ Valid ticker discovery
 - ✅ Invalid ticker handling
 - ✅ Rate limit respect
@@ -157,6 +160,7 @@ result = await discover_sec_filing("TSLA", "10-K", 2020)
 **Status**: ⏳ Tests not written yet
 
 **Next Steps**:
+
 1. Write `tests/test_ingestion.py`
 2. Implement `skill_seeker_mcp/finance_tools/ingestion.py`
 3. Ensure all tests pass
@@ -179,12 +183,14 @@ result = await discover_sec_filing("TSLA", "10-K", 2020)
 ## 🛡️ Test Safety
 
 ### Fixtures Prevent:
+
 - ✅ **Test pollution**: Fresh database per test
 - ✅ **API costs**: Mocked API clients
 - ✅ **Rate limiting**: Controlled request timing
 - ✅ **Data leaks**: Temporary directories auto-cleaned
 
 ### Test Markers:
+
 - `@pytest.mark.unit`: Fast, isolated tests
 - `@pytest.mark.integration`: Requires databases
 - `@pytest.mark.slow`: Long-running tests
@@ -199,6 +205,12 @@ This project enforces:
 - ❌ No coverage bypass (80% minimum enforced)
 - ❌ No untested code (TDD: tests first)
 
+## 🤖 Droids (Short)
+
+- **What:** Lightweight, specialized agents (droids) that perform testing, security, performance, SQL, and answer-generation tasks for finance-screener.
+- **Where:** See `AGENTS.md` for the droid roster and invocation examples, and `.factory/droids/` for individual droid specs and artifact contracts.
+- **Why:** Finance-specific droids are GAAP-/SEC-aware and live inside this project (avoid using root project droids).
+
 ## 📚 Related Documentation
 
 - **Complete Guide**: `/docs/finance-application-guide/README.md`
@@ -208,17 +220,20 @@ This project enforces:
 ## 🎯 Success Metrics
 
 **Phase 1 Complete** when:
+
 - ✅ All discovery tests pass
 - ✅ 80%+ coverage on discovery module
 - ✅ No lint errors
 - ✅ Documentation updated
 
 **Phase 2 Complete** when:
+
 - ✅ All ingestion tests pass
 - ✅ DuckDB + ChromaDB integration tests pass
 - ✅ Real SEC filing ingestion works end-to-end
 
 **Production Ready** when:
+
 - ✅ All 5 tools have full test coverage
 - ✅ Integration tests pass
 - ✅ Performance tests meet benchmarks
